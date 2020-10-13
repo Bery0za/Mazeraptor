@@ -1,7 +1,7 @@
 # Mazeraptor
 ![Mazeraptor](https://github.com/Bery0za/Mazeraptor/blob/master/Bery0za.Mazeraptor/Logo.png "Mazeraptor")
 
-Do you need mazes? This library is for you. Mazeraptor is able to generate rectangular, circular, hexagonal or triangular mazes with various generator types and parameters and find paths between cells.
+Do you need mazes? This library is for you. Mazeraptor is a .NET library able to generate rectangular, circular, hexagonal or triangular mazes with various generator types and parameters and find paths between cells.
 
 ## Currently supported generators
 #### RecursiveBacktracker(firstCellSelector, leftCellSelector, neighborCellSelector)
@@ -19,7 +19,7 @@ Other functions are the same as in RecursiveBacktracker.
 - Breadth first
 - Depth first
 
-You may also use your favorite photos to define a shape of the maze (depending on pics’ alpha channel or lightness or any other function). You just have to wrap your pic in **IShape** interface and tell which pixels are interior.
+You may also use your favorite photos to define a shape of the maze (depending on picsâ€™ alpha channel or lightness or any other function). You just have to wrap your pic in **IShape** interface and tell which pixels are interior.
 
 ## Planned features
 - [ ] Voronoi structure
