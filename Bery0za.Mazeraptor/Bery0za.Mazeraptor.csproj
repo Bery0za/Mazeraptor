@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{47CDDA96-ECCB-475D-9163-2B80A8B99FE4}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Bery0za.Mazeraptor</RootNamespace>
+    <AssemblyName>Bery0za.Mazeraptor</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>false</Optimize>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Bery0za.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Core\Bery0za.Core\bin\$(Configuration)\netstandard2.0\Bery0za.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Bery0za.Methematica, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Methematica\Bery0za.Methematica\bin\$(Configuration)\netstandard2.0\Bery0za.Methematica.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cell.cs" />
+    <Compile Include="IStructure.cs" />
+    <Compile Include="Maze.cs" />
+    <Compile Include="Generators\GrowingTreeGenerator.cs" />
+    <Compile Include="Generators\RecursiveBacktrackerGenerator.cs" />
+    <Compile Include="Generators\MazeGenerator.cs" />
+    <Compile Include="Solvers\MazeSolver.cs" />
+    <Compile Include="Solvers\AStarSolver.cs" />
+    <Compile Include="Solvers\BreadthFirstSolver.cs" />
+    <Compile Include="Solvers\DepthFirstSolverStack.cs" />
+    <Compile Include="Solvers\DepthFirstSolverRecursive.cs" />
+    <Compile Include="ProgressStage.cs" />
+    <Compile Include="Solvers\Result.cs" />
+    <Compile Include="Types\Circular\CircularParameters.cs" />
+    <Compile Include="Types\Hexagonal\HexagonalParameters.cs" />
+    <Compile Include="Types\Hexagonal\HexagonalPosition.cs" />
+    <Compile Include="Types\Hexagonal\HexagonalStructure.cs" />
+    <Compile Include="Types\Parameters.cs" />
+    <Compile Include="Types\Circular\CircularStructure.cs" />
+    <Compile Include="Types\Circular\CircularFunctions.cs" />
+    <Compile Include="Types\Circular\CircularPosition.cs" />
+    <Compile Include="Types\Position.cs" />
+    <Compile Include="IPosition.cs" />
+    <Compile Include="Types\Rectangular\RectangularParameters.cs" />
+    <Compile Include="Types\Rectangular\RectangularStructure.cs" />
+    <Compile Include="Types\Rectangular\RectangularPosition.cs" />
+    <Compile Include="Types\Shaped\IShape.cs" />
+    <Compile Include="Types\Shaped\ShapedStructure.cs" />
+    <Compile Include="Types\Shaped\ShapedParameters.cs" />
+    <Compile Include="Types\Triangular\TriangularParameters.cs" />
+    <Compile Include="Types\Triangular\TriangularPosition.cs" />
+    <Compile Include="Types\Triangular\TriangularStructure.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types\Structure.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LICENSE" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
