@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 
-using Bery0za.Methematica;
 using Bery0za.Methematica.Utils;
 
 namespace Bery0za.Mazerator.Types.Triangular

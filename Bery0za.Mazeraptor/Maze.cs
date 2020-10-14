@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 
 using Bery0za.Mazerator.Generators;
-using Bery0za.Mazerator.Types;
-using Bery0za.Mazerator.Types.Rectangular;
 
 namespace Bery0za.Mazerator
 {
