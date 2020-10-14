@@ -3,6 +3,16 @@
 
 Do you need mazes? This library is for you. Mazeraptor is a .NET library able to generate rectangular, circular, hexagonal or triangular mazes with various generator types and parameters and find paths between cells.
 
+```c#
+IStructure structure = new CircularStructure(new CircularParameters(10, 1.2f));
+MazeGenerator = generator = new RecursiveBacktrackerGenerator();
+Maze maze = new Maze("Theseus", structure, generator);
+maze.Generate();
+
+maze.Seed = "And the Bad Seeds";
+maze.Generate(); // Same structure and generator but this the other seed
+```
+
 ## Currently supported generators
 #### RecursiveBacktracker(firstCellSelector, leftCellSelector, neighborCellSelector)
 Tends to form long twisty passages.
