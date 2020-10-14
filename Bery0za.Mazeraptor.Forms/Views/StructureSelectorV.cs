@@ -3,24 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using System.Windows.Forms;
+
 using Bery0za.Ariadne;
 using Bery0za.Ariadne.Framework;
 using Bery0za.Mazerator.Forms.ViewModels;
 
 namespace Bery0za.Mazerator.Forms.Views
 {
-    public interface IStructureV
-    {
-
-    }
+    public interface IStructureV { }
 
     public class StructureSelectorV : IBindable<StructureSelectorVM>
     {
         public readonly BindableWrapper<IStructureVM> Structure = new BindableWrapper<IStructureVM>();
         public readonly PropertyWrapper<StructureType> Type = new PropertyWrapper<StructureType>();
-        public readonly PropertyWrapper<IEnumerable<StructureType>> AvailableTypes = new PropertyWrapper<IEnumerable<StructureType>>();
+
+        public readonly PropertyWrapper<IEnumerable<StructureType>> AvailableTypes =
+            new PropertyWrapper<IEnumerable<StructureType>>();
 
         private FlowLayoutPanel _layout;
         private ComboBox _selector;
@@ -35,7 +34,9 @@ namespace Bery0za.Mazerator.Forms.Views
             _loadDialog = loadDialog;
         }
 
-        public void OnContextAttach(StructureSelectorVM context, IList<IBinding> bindings, IBinder<StructureSelectorVM> binder)
+        public void OnContextAttach(StructureSelectorVM context,
+                                    IList<IBinding> bindings,
+                                    IBinder<StructureSelectorVM> binder)
         {
             Structure.Attaching += OnStructureAttaching;
             Structure.Destroying += OnStructureDestroying;
@@ -45,8 +46,8 @@ namespace Bery0za.Mazerator.Forms.Views
 
             binder.AttachChild(context.Structure, Structure);
 
-            AvailableTypes.ValueChanged += AvailableTypesOnValueChanged; 
-            
+            AvailableTypes.ValueChanged += AvailableTypesOnValueChanged;
+
             _selector.SelectedValueChanged += SelectorOnSelectedValueChanged;
         }
 
@@ -63,6 +64,7 @@ namespace Bery0za.Mazerator.Forms.Views
 
                     break;
                 }
+
                 case CircularStructureVM cp:
                 {
                     CircularStructureV v = new CircularStructureV();
@@ -72,6 +74,7 @@ namespace Bery0za.Mazerator.Forms.Views
 
                     break;
                 }
+
                 case ShapedStructureVM sp:
                 {
                     ShapedStructureV v = new ShapedStructureV(_loadDialog);
@@ -93,7 +96,8 @@ namespace Bery0za.Mazerator.Forms.Views
             }
         }
 
-        private void AvailableTypesOnValueChanged(IEnumerable<StructureType> current, IEnumerable<StructureType> previous)
+        private void AvailableTypesOnValueChanged(IEnumerable<StructureType> current,
+                                                  IEnumerable<StructureType> previous)
         {
             _selector.DataSource = current.ToArray();
         }

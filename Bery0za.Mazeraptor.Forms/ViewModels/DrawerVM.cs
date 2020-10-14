@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+
 using Bery0za.Ariadne;
 using Bery0za.Ariadne.Framework;
 using Bery0za.Mazerator.Forms.Drawers;
@@ -29,12 +30,14 @@ namespace Bery0za.Mazerator.Forms.ViewModels
         public PropertyWrapper<List<Cell>> SolvedPath = new PropertyWrapper<List<Cell>>(new List<Cell>());
         public PropertyWrapper<Bitmap> Bitmap = new PropertyWrapper<Bitmap>(new Bitmap(1, 1));
 
-        private FillType[] _fillTypes = new[] { Drawers.FillType.Solid, Drawers.FillType.GenerationGradient, Drawers.FillType.SolvedPath };
+        private FillType[] _fillTypes = new[]
+            { Drawers.FillType.Solid, Drawers.FillType.GenerationGradient, Drawers.FillType.SolvedPath };
+
         private FillType[] _fillTypesNoSolved = new[] { Drawers.FillType.Solid, Drawers.FillType.GenerationGradient };
 
         public DrawerVM()
         {
-            AvailableFillTypes.Value = new [] { Drawers.FillType.Solid, Drawers.FillType.GenerationGradient };
+            AvailableFillTypes.Value = new[] { Drawers.FillType.Solid, Drawers.FillType.GenerationGradient };
 
             Maze.ValueChanged += MazeOnValueChanged;
             SolvedPath.ValueChanged += OnSolvedPathChange;
@@ -47,7 +50,7 @@ namespace Bery0za.Mazerator.Forms.ViewModels
             {
                 Bitmap bitmap;
                 IEnumerable<Cell> order;
-                
+
                 switch (FillType.Value)
                 {
                     case Drawers.FillType.Solid:
@@ -82,7 +85,7 @@ namespace Bery0za.Mazerator.Forms.ViewModels
                         var sDrawer = new ShapedMazeDrawer();
                         bitmap = sDrawer.DrawMazeOrdered(ss, CreateParameters(), order);
                         break;
-                    
+
                     default:
                         throw new ArgumentException();
                 }
@@ -138,8 +141,13 @@ namespace Bery0za.Mazerator.Forms.ViewModels
 
         private DrawingParameters CreateParameters()
         {
-            return new DrawingParameters(StrokeWidth.Value, StrokeColor.Value, StrokeEnabled.Value, FillType.Value,
-                FillColor.Value, FillEnabled.Value, CellSize.Value);
+            return new DrawingParameters(StrokeWidth.Value,
+                                         StrokeColor.Value,
+                                         StrokeEnabled.Value,
+                                         FillType.Value,
+                                         FillColor.Value,
+                                         FillEnabled.Value,
+                                         CellSize.Value);
         }
 
         public override void Destroy()

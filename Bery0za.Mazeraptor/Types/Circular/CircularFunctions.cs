@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Bery0za.Mazerator.Types.Circular
 {
-	public static class CircularFunctions
-	{
-	    private const float PI2 = (float)(Math.PI * 2);
+    public static class CircularFunctions
+    {
+        private const float PI2 = (float)(Math.PI * 2);
 
         public static int CellsInRing(int ring, float ratio = 1, int prevRingCount = 0)
         {
@@ -22,6 +22,7 @@ namespace Bery0za.Mazerator.Types.Circular
             }
 
             int prevCount = prevRingCount == 0 ? CellsInRing(ring - 1, ratio) : prevRingCount;
+
             if ((circumference * ratio) >= (prevCount * 2))
             {
                 prevCount *= 2;
@@ -30,12 +31,19 @@ namespace Bery0za.Mazerator.Types.Circular
             return prevCount;
         }
 
-        public static (float radius, float angle) CircularPositionToPolar(CircularPosition position, float ringHeight, int cellsInRing)
+        public static (float radius, float angle) CircularPositionToPolar(
+            CircularPosition position,
+            float ringHeight,
+            int cellsInRing)
         {
             return CircularPositionToPolar(position.ring, (float)position.step, ringHeight, cellsInRing);
         }
-        
-        public static (float radius, float angle) CircularPositionToPolar(float ring, float step, float ringHeight, int cellsInRing)
+
+        public static (float radius, float angle) CircularPositionToPolar(
+            float ring,
+            float step,
+            float ringHeight,
+            int cellsInRing)
         {
             return (ring * ringHeight, StepToAngle(step, cellsInRing));
         }
@@ -56,5 +64,5 @@ namespace Bery0za.Mazerator.Types.Circular
 
             return radians * conversion;
         }
-	}
+    }
 }

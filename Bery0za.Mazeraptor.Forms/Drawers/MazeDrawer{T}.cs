@@ -38,8 +38,12 @@ namespace Bery0za.Mazerator.Forms.Drawers
 
             return bitmap;
         }
-        
-        protected abstract void FillMaze(Graphics graphics, T structure, DrawingParameters parameters, IEnumerable<Cell> order);
+
+        protected abstract void FillMaze(Graphics graphics,
+                                         T structure,
+                                         DrawingParameters parameters,
+                                         IEnumerable<Cell> order);
+
         protected abstract void StrokeMaze(Graphics graphics, T structure, DrawingParameters parameters);
         protected abstract (int width, int height) CalculateBitmapSize(T structure, DrawingParameters parameters);
     }

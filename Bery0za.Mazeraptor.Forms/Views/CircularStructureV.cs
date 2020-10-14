@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 using Bery0za.Ariadne;
 using Bery0za.Ariadne.Framework;
 using Bery0za.Mazerator.Forms.ViewModels;
@@ -23,7 +24,9 @@ namespace Bery0za.Mazerator.Forms.Views
             InitializeComponent();
         }
 
-        public void OnContextAttach(CircularStructureVM context, IList<IBinding> bindings, IBinder<CircularStructureVM> binder)
+        public void OnContextAttach(CircularStructureVM context,
+                                    IList<IBinding> bindings,
+                                    IBinder<CircularStructureVM> binder)
         {
             bindings.Add(Binder.Side(Rings).To(context.Rings).Using(BindingFlow.TwoWay));
             bindings.Add(Binder.Side(Ratio).To(context.Ratio).Using(BindingFlow.TwoWay));

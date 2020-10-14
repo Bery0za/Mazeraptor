@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Bery0za.Ariadne;
 using Bery0za.Ariadne.Framework;
 
@@ -18,7 +19,9 @@ namespace Bery0za.Mazerator.Forms.ViewModels
         public PropertyWrapper<bool> Canceled = new PropertyWrapper<bool>(false);
         public PropertyWrapper<bool> Finished = new PropertyWrapper<bool>(false);
 
-        private BackgroundWorker _worker = new BackgroundWorker() { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
+        private BackgroundWorker _worker = new BackgroundWorker()
+            { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
+
         private DoWorkEventHandler _doWork;
         private RunWorkerCompletedEventHandler _runWorkerCompleted;
 

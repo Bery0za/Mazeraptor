@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Bery0za.Methematica.Utils;
 
 namespace Bery0za.Mazerator.Types.Hexagonal
@@ -7,7 +8,14 @@ namespace Bery0za.Mazerator.Types.Hexagonal
     {
         public readonly int q;
         public readonly int r;
-        public int s { get { return -q - r; } }
+
+        public int s
+        {
+            get
+            {
+                return -q - r;
+            }
+        }
 
         public HexagonalPosition(int q, int r)
         {

@@ -5,12 +5,9 @@ namespace Bery0za.Mazerator.Types.Rectangular
     public class RectangularStructure : Structure<RectangularParameters, RectangularPosition>
     {
         private Cell[,] cells;
-        
-        public RectangularStructure(RectangularParameters parameters)
-            : base(parameters)
-        {
 
-        }
+        public RectangularStructure(RectangularParameters parameters)
+            : base(parameters) { }
 
         public override void Init()
         {
@@ -30,11 +27,11 @@ namespace Bery0za.Mazerator.Types.Rectangular
         protected override bool ContainsAtPosition(RectangularPosition position)
         {
             return position.x > -1
-                   && position.x < parameters.width 
+                   && position.x < parameters.width
                    && position.y > -1
                    && position.y < parameters.height;
         }
-        
+
         protected override Cell CellAtPosition(RectangularPosition position)
         {
             return cells[position.x, position.y];

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Bery0za.Ariadne;
 using Bery0za.Ariadne.Framework;
 using Bery0za.Mazerator.Solvers;
@@ -23,10 +24,13 @@ namespace Bery0za.Mazerator.Forms.ViewModels
     {
         public PropertyWrapper<Maze> Maze = new PropertyWrapper<Maze>(Mazerator.Maze.Empty);
         public PropertyWrapper<bool> SolvingEnabled = new PropertyWrapper<bool>(false);
-        public PropertyWrapper<IEnumerable<Cell>> Cells = new PropertyWrapper<IEnumerable<Cell>>(Enumerable.Empty<Cell>()); 
+
+        public PropertyWrapper<IEnumerable<Cell>> Cells =
+            new PropertyWrapper<IEnumerable<Cell>>(Enumerable.Empty<Cell>());
+
         public PropertyWrapper<Cell> SourceCell = new PropertyWrapper<Cell>(Cell.Empty);
         public PropertyWrapper<Cell> TargetCell = new PropertyWrapper<Cell>(Cell.Empty);
-        public PropertyWrapper<SolverType> Type = new PropertyWrapper<SolverType>(SolverType.AStar); 
+        public PropertyWrapper<SolverType> Type = new PropertyWrapper<SolverType>(SolverType.AStar);
         public PropertyWrapper<IEnumerable<SolverType>> AvailableTypes = new PropertyWrapper<IEnumerable<SolverType>>();
         public PropertyWrapper<ProgressVM> Progress = new PropertyWrapper<ProgressVM>(ProgressVM.Empty);
 
@@ -35,7 +39,11 @@ namespace Bery0za.Mazerator.Forms.ViewModels
 
         public SolverVM()
         {
-            AvailableTypes.Value = new [] { SolverType.AStar, SolverType.BreadthFirst, SolverType.DepthFirstRecursive, SolverType.DepthFirstStacked };
+            AvailableTypes.Value = new[]
+            {
+                SolverType.AStar, SolverType.BreadthFirst, SolverType.DepthFirstRecursive, SolverType.DepthFirstStacked
+            };
+
             Maze.ValueChanged += OnMazeChange;
         }
 
@@ -96,6 +104,7 @@ namespace Bery0za.Mazerator.Forms.ViewModels
                     case ProgressStage.Failed:
                         failed = true;
                         break;
+
                     case ProgressStage.Ongoing:
                         worker.ReportProgress((int)percentage);
                         break;
@@ -123,12 +132,16 @@ namespace Bery0za.Mazerator.Forms.ViewModels
             {
                 case SolverType.AStar:
                     return new AStarSolver();
+
                 case SolverType.BreadthFirst:
                     return new BreadthFirstSolver();
+
                 case SolverType.DepthFirstRecursive:
                     return new DepthFirstSolverRecursive();
+
                 case SolverType.DepthFirstStacked:
                     return new DepthFirstSolverStack();
+
                 default:
                     throw new ArgumentException();
             }

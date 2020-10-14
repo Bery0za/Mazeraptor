@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Bery0za.Ariadne;
 using Bery0za.Ariadne.Framework;
 
@@ -14,7 +15,7 @@ namespace Bery0za.Mazerator.Forms.ViewModels
         public ContextWrapper<SolverVM> Solver = new ContextWrapper<SolverVM>(new SolverVM());
         public ContextWrapper<DrawerVM> Drawer = new ContextWrapper<DrawerVM>(new DrawerVM());
         public ContextWrapper<ProgressVM> Progress = new ContextWrapper<ProgressVM>(ProgressVM.Empty);
-        
+
         public AppVM()
         {
             _bindings.Add(Binder.Side(Solver.Value.Maze).To(Generator.Value.Maze).Using(BindingFlow.OneWay));

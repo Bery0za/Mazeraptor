@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
+
 using Bery0za.Ariadne;
 using Bery0za.Ariadne.Framework;
 using Bery0za.Mazerator.Forms.ViewModels;
 
 namespace Bery0za.Mazerator.Forms.Views
 {
-	public partial class AppV : Form, IBindable<AppVM>
+    public partial class AppV : Form, IBindable<AppVM>
     {
         public BindableWrapper<GeneratorVM> Generator = new BindableWrapper<GeneratorVM>();
         public BindableWrapper<SolverVM> Solver = new BindableWrapper<SolverVM>();
@@ -22,9 +23,31 @@ namespace Bery0za.Mazerator.Forms.Views
         {
             InitializeComponent();
 
-            _generatorV = new GeneratorV(structureLayout, structureList, generatorLayout, generatorList, generateButton, seedTextBox, openFileDialog);
+            _generatorV = new GeneratorV(structureLayout,
+                                         structureList,
+                                         generatorLayout,
+                                         generatorList,
+                                         generateButton,
+                                         seedTextBox,
+                                         openFileDialog);
+
             _solverV = new SolverV(solverBox, solverList, sourceCellList, targetCellList, solveButton);
-            _drawerV = new DrawerV(drawerBox, drawButton, strokeColorButton, strokeCheckBox, strokeWidthNumeric, fillColorButton, fillCheckBox, fillTypeList, cellSizeNumeric, autoDrawCheckBox, colorDialog, mazePicture, saveImageButton, saveFileDialog);
+
+            _drawerV = new DrawerV(drawerBox,
+                                   drawButton,
+                                   strokeColorButton,
+                                   strokeCheckBox,
+                                   strokeWidthNumeric,
+                                   fillColorButton,
+                                   fillCheckBox,
+                                   fillTypeList,
+                                   cellSizeNumeric,
+                                   autoDrawCheckBox,
+                                   colorDialog,
+                                   mazePicture,
+                                   saveImageButton,
+                                   saveFileDialog);
+
             _progressV = new ProgressV(this);
         }
 

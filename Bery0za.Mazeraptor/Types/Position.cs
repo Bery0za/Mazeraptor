@@ -5,7 +5,8 @@ using System.Text;
 
 namespace Bery0za.Mazerator.Types
 {
-    public abstract class Position<T> : IPosition where T : IPosition
+    public abstract class Position<T> : IPosition
+        where T : IPosition
     {
         public float DistanceTo(IPosition position)
         {

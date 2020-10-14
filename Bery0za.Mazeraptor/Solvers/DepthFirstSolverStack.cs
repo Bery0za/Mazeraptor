@@ -5,18 +5,15 @@ using System.Linq;
 namespace Bery0za.Mazerator.Solvers
 {
     public class DepthFirstSolverStack : MazeSolver
-	{
-        private HashSet<Cell> plottedCells; 
+    {
+        private HashSet<Cell> plottedCells;
         private Stack<Cell> openSet;
 
         public DepthFirstSolverStack()
-            : base()
-		{
-
-		}
+            : base() { }
 
         protected override void ProcessSolving(Cell startCell, Cell endCell)
-		{
+        {
             if (DFS(startCell, endCell))
             {
                 SolutionFound(openSet);
@@ -25,16 +22,16 @@ namespace Bery0za.Mazerator.Solvers
             {
                 SolutionNotFound();
             }
-		}
-		
-		private bool DFS(Cell startCell, Cell endCell)
-		{
+        }
+
+        private bool DFS(Cell startCell, Cell endCell)
+        {
             float procTotalCount = structure.Count() * 0.01f;
 
             plottedCells = new HashSet<Cell>();
             openSet = new Stack<Cell>();
 
-		    openSet.Push(startCell);
+            openSet.Push(startCell);
 
             while (openSet.Any())
             {
@@ -47,6 +44,7 @@ namespace Bery0za.Mazerator.Solvers
                 }
 
                 Cell nextCell;
+
                 if ((nextCell = curCell.AdjacentCells.Except(plottedCells).FirstOrDefault()) != null)
                 {
                     openSet.Push(nextCell);
@@ -61,6 +59,6 @@ namespace Bery0za.Mazerator.Solvers
             }
 
             return false;
-		}		
-	}
+        }
+    }
 }

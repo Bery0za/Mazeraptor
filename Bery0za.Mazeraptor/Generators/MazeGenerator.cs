@@ -5,11 +5,13 @@ using System.Linq;
 namespace Bery0za.Mazerator.Generators
 {
     public abstract class MazeGenerator
-	{
+    {
         public delegate Cell CellSelector(IEnumerable<Cell> cells, Random random);
-        public delegate Cell NeighborSelector(Cell cell, Random random); 
-        
+
+        public delegate Cell NeighborSelector(Cell cell, Random random);
+
         public delegate void GenerationStageHandler(ProgressStage stage, IStructure structure, float percentage);
+
         public delegate void VisitedCellHandler(IStructure structure, Cell cell);
 
         public event GenerationStageHandler Stage;
@@ -27,7 +29,7 @@ namespace Bery0za.Mazerator.Generators
         {
             _trackGenerationPath = trackGenerationPath;
         }
-        
+
         internal void GenerateMaze(IStructure structure, Random random)
         {
             cancel = false;
@@ -74,9 +76,9 @@ namespace Bery0za.Mazerator.Generators
         }
 
         public static Cell RandomCellSelector(IEnumerable<Cell> cells, Random random)
-		{
+        {
             return cells.ElementAt(random.Next(cells.Count()));
-		}
+        }
 
         public static Cell OldestCellSelector(IEnumerable<Cell> cells, Random random)
         {
@@ -97,21 +99,27 @@ namespace Bery0za.Mazerator.Generators
         {
             if (ratio < 0 || ratio > 1) throw new ArgumentOutOfRangeException("Ratio must be in range [0; 1].");
 
-            return (cells, random) => random.NextDouble() < ratio ? NewestCellSelector(cells, random) : RandomCellSelector(cells, random);
+            return (cells, random) => random.NextDouble() < ratio
+                ? NewestCellSelector(cells, random)
+                : RandomCellSelector(cells, random);
         }
 
         public static CellSelector OldestRandomCellSelector(float ratio)
         {
             if (ratio < 0 || ratio > 1) throw new ArgumentOutOfRangeException("Ratio must be in range [0; 1].");
 
-            return (cells, random) => random.NextDouble() < ratio ? OldestCellSelector(cells, random) : RandomCellSelector(cells, random);
+            return (cells, random) => random.NextDouble() < ratio
+                ? OldestCellSelector(cells, random)
+                : RandomCellSelector(cells, random);
         }
 
         public static CellSelector OldestNewestCellSelector(float ratio)
         {
             if (ratio < 0 || ratio > 1) throw new ArgumentOutOfRangeException("Ratio must be in range [0; 1].");
 
-            return (cells, random) => random.NextDouble() < ratio ? OldestCellSelector(cells, random) : NewestCellSelector(cells, random);
+            return (cells, random) => random.NextDouble() < ratio
+                ? OldestCellSelector(cells, random)
+                : NewestCellSelector(cells, random);
         }
 
         public static CellSelector OrderedCellSelector(Func<Cell, float> valueSelector)

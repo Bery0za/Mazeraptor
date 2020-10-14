@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 using Bery0za.Ariadne;
 using Bery0za.Ariadne.Framework;
 using Bery0za.Mazerator.Forms.ViewModels;
@@ -23,7 +24,9 @@ namespace Bery0za.Mazerator.Forms.Views
             InitializeComponent();
         }
 
-        public void OnContextAttach(RectangularStructureVM context, IList<IBinding> bindings, IBinder<RectangularStructureVM> binder)
+        public void OnContextAttach(RectangularStructureVM context,
+                                    IList<IBinding> bindings,
+                                    IBinder<RectangularStructureVM> binder)
         {
             bindings.Add(Binder.Side(Width).To(context.Width).Using(BindingFlow.TwoWay));
             bindings.Add(Binder.Side(Height).To(context.Height).Using(BindingFlow.TwoWay));

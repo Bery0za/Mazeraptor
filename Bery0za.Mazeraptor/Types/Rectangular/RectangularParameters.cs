@@ -6,6 +6,7 @@ namespace Bery0za.Mazerator.Types.Rectangular
     {
         public readonly int width;
         public readonly int height;
+
         public RectangularParameters(int width, int height)
         {
             this.width = width;

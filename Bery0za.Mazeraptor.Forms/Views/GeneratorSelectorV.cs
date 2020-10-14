@@ -4,22 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 using Bery0za.Ariadne;
 using Bery0za.Ariadne.Framework;
 using Bery0za.Mazerator.Forms.ViewModels;
 
 namespace Bery0za.Mazerator.Forms.Views
 {
-    public interface IGeneratorV
-    {
-
-    }
+    public interface IGeneratorV { }
 
     public class GeneratorSelectorV : IBindable<GeneratorSelectorVM>
     {
         public readonly BindableWrapper<IGeneratorVM> Generator = new BindableWrapper<IGeneratorVM>();
         public readonly PropertyWrapper<GeneratorType> Type = new PropertyWrapper<GeneratorType>();
-        public readonly PropertyWrapper<IEnumerable<GeneratorType>> AvailableTypes = new PropertyWrapper<IEnumerable<GeneratorType>>();
+
+        public readonly PropertyWrapper<IEnumerable<GeneratorType>> AvailableTypes =
+            new PropertyWrapper<IEnumerable<GeneratorType>>();
 
         private FlowLayoutPanel _layout;
         private ComboBox _selector;
@@ -31,7 +31,9 @@ namespace Bery0za.Mazerator.Forms.Views
             this._selector = selector;
         }
 
-        public void OnContextAttach(GeneratorSelectorVM context, IList<IBinding> bindings, IBinder<GeneratorSelectorVM> binder)
+        public void OnContextAttach(GeneratorSelectorVM context,
+                                    IList<IBinding> bindings,
+                                    IBinder<GeneratorSelectorVM> binder)
         {
             Generator.Attaching += OnGeneratorAttaching;
             Generator.Destroying += OnGeneratorDestroying;
@@ -59,6 +61,7 @@ namespace Bery0za.Mazerator.Forms.Views
 
                     break;
                 }
+
                 case GrowingTreeGeneratorVM gt:
                 {
                     GrowingTreeGeneratorV v = new GrowingTreeGeneratorV();
@@ -91,7 +94,7 @@ namespace Bery0za.Mazerator.Forms.Views
                 Type.Set(GeneratorType.RecursiveBacktracker);
             }
         }
-        
+
         private void AvailableTypesOnValueChanged(IEnumerable<GeneratorType> value, IEnumerable<GeneratorType> previous)
         {
             _selector.DataSource = value;

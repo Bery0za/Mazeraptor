@@ -10,38 +10,35 @@ namespace Bery0za.Mazerator.Types.Circular
 
         private HashSet<Cell> this[int ring]
         {
-        	get
-        	{
-        		return cells.ElementAt(ring);
-        	}
+            get
+            {
+                return cells.ElementAt(ring);
+            }
         }
 
         private Cell this[int ring, int step]
         {
-        	get
-        	{
-        		int cellsNumber = CellsNumberInRing(ring);
-        		int angle = step % cellsNumber;
-        		
-        		while (angle < 0)
-        		{
-        			angle += cellsNumber;
-        		}
+            get
+            {
+                int cellsNumber = CellsNumberInRing(ring);
+                int angle = step % cellsNumber;
+
+                while (angle < 0)
+                {
+                    angle += cellsNumber;
+                }
 
                 while (angle >= CellsNumberInRing(ring))
-        		{
-        			angle -= cellsNumber;
-        		}
-        		
-        		return cells.ElementAt(ring).ElementAt(angle);
-        	}
+                {
+                    angle -= cellsNumber;
+                }
+
+                return cells.ElementAt(ring).ElementAt(angle);
+            }
         }
 
         public CircularStructure(CircularParameters parameters)
-            : base(parameters)
-        {
-
-        }
+            : base(parameters) { }
 
         public override void Init()
         {
@@ -68,7 +65,7 @@ namespace Bery0za.Mazerator.Types.Circular
         {
             return position.ring <= parameters.rings;
         }
-        
+
         protected override Cell CellAtPosition(CircularPosition position)
         {
             return this[position.ring, position.step];

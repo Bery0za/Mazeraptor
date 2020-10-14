@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 using Bery0za.Mazerator.Types;
 
 namespace Bery0za.Mazerator

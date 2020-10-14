@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Bery0za.Mazerator.Types.Rectangular;
 using Bery0za.Mazerator.Types.Shaped;
 
@@ -26,6 +27,7 @@ namespace Bery0za.Mazerator.Forms
             _bitmap = bitmap;
             ShapeSelector = interiorSelector;
         }
+
         public bool ContainsAtPosition(RectangularPosition position)
         {
             Color color = _bitmap.GetPixel(position.x, position.y);

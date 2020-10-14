@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Bery0za.Ariadne;
 using Bery0za.Ariadne.Framework;
 using Bery0za.Mazerator.Types.Shaped;
@@ -19,14 +20,17 @@ namespace Bery0za.Mazerator.Forms.ViewModels
 
     public class ShapedStructureVM : ViewModel, IStructureVM
     {
-        public PropertyWrapper<InteriorSelector> Type = new PropertyWrapper<InteriorSelector>(ViewModels.InteriorSelector.Alpha);
-        public PropertyWrapper<IEnumerable<InteriorSelector>> AvailableTypes = new PropertyWrapper<IEnumerable<InteriorSelector>>();
+        public PropertyWrapper<InteriorSelector> Type =
+            new PropertyWrapper<InteriorSelector>(ViewModels.InteriorSelector.Alpha);
+
+        public PropertyWrapper<IEnumerable<InteriorSelector>> AvailableTypes =
+            new PropertyWrapper<IEnumerable<InteriorSelector>>();
 
         private BitmapShape _shape = BitmapShape.Empty;
 
         public ShapedStructureVM()
         {
-            AvailableTypes.Value = new [] { InteriorSelector.Alpha, InteriorSelector.Lightness };
+            AvailableTypes.Value = new[] { InteriorSelector.Alpha, InteriorSelector.Lightness };
 
             Type.ValueChanged += TypeOnValueChanged;
         }
@@ -35,7 +39,7 @@ namespace Bery0za.Mazerator.Forms.ViewModels
         {
             return new ShapedStructure(new ShapedParameters(_shape));
         }
-        
+
         public void Load(Stream stream)
         {
             if (stream.CanRead)

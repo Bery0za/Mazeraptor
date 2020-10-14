@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Bery0za.Ariadne;
 using Bery0za.Ariadne.Framework;
 
@@ -13,14 +14,16 @@ namespace Bery0za.Mazerator.Forms.ViewModels
     {
         public PropertyWrapper<Maze> Maze = new PropertyWrapper<Maze>(Mazerator.Maze.Empty);
         public PropertyWrapper<string> Seed = new PropertyWrapper<string>("Seed");
-        public ContextWrapper<StructureSelectorVM> StructureSelector = new ContextWrapper<StructureSelectorVM>(new StructureSelectorVM()); 
-        public ContextWrapper<GeneratorSelectorVM> GeneratorSelector = new ContextWrapper<GeneratorSelectorVM>(new GeneratorSelectorVM());
+
+        public ContextWrapper<StructureSelectorVM> StructureSelector =
+            new ContextWrapper<StructureSelectorVM>(new StructureSelectorVM());
+
+        public ContextWrapper<GeneratorSelectorVM> GeneratorSelector =
+            new ContextWrapper<GeneratorSelectorVM>(new GeneratorSelectorVM());
+
         public PropertyWrapper<ProgressVM> Progress = new PropertyWrapper<ProgressVM>(ProgressVM.Empty);
 
-        public GeneratorVM()
-        {
-
-        }
+        public GeneratorVM() { }
 
         public void GenerateMaze()
         {
@@ -33,7 +36,9 @@ namespace Bery0za.Mazerator.Forms.ViewModels
             BackgroundWorker worker = sender as BackgroundWorker;
             bool failed = false;
 
-            Maze maze = new Maze(Seed.Value, StructureSelector.Value.CreateStructure(), GeneratorSelector.Value.CreateGenerator());
+            Maze maze = new Maze(Seed.Value,
+                                 StructureSelector.Value.CreateStructure(),
+                                 GeneratorSelector.Value.CreateGenerator());
 
             maze.Generator.Stage += GeneratorOnStage;
             maze.Generate();
@@ -54,6 +59,7 @@ namespace Bery0za.Mazerator.Forms.ViewModels
                     case ProgressStage.Failed:
                         failed = true;
                         break;
+
                     case ProgressStage.Ongoing:
                         worker.ReportProgress((int)percentage);
                         break;

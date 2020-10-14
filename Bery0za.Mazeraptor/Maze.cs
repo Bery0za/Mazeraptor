@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using Bery0za.Mazerator.Generators;
 using Bery0za.Mazerator.Types;
 using Bery0za.Mazerator.Types.Rectangular;
 
 namespace Bery0za.Mazerator
 {
-	public class Maze
-	{
-		public static Maze Empty = new Maze("", null, null);
+    public class Maze
+    {
+        public static Maze Empty = new Maze("", null, null);
 
         public string Seed { get; set; }
         public IStructure Structure { get; private set; }

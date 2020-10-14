@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Bery0za.Methematica.Utils;
 
 namespace Bery0za.Mazerator.Types.Triangular

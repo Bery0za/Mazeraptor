@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Bery0za.Ariadne;
 using Bery0za.Ariadne.Framework;
 
@@ -22,13 +23,18 @@ namespace Bery0za.Mazerator.Forms.ViewModels
 
     public class StructureSelectorVM : ViewModel
     {
-        public readonly ContextWrapper<IStructureVM> Structure = new ContextWrapper<IStructureVM>(new RectangularStructureVM());
-        public readonly PropertyWrapper<StructureType> Type = new PropertyWrapper<StructureType>(StructureType.Rectangular);
-        public readonly PropertyWrapper<IEnumerable<StructureType>> AvailableTypes = new PropertyWrapper<IEnumerable<StructureType>>();
+        public readonly ContextWrapper<IStructureVM> Structure =
+            new ContextWrapper<IStructureVM>(new RectangularStructureVM());
+
+        public readonly PropertyWrapper<StructureType> Type =
+            new PropertyWrapper<StructureType>(StructureType.Rectangular);
+
+        public readonly PropertyWrapper<IEnumerable<StructureType>> AvailableTypes =
+            new PropertyWrapper<IEnumerable<StructureType>>();
 
         public StructureSelectorVM()
         {
-            AvailableTypes.Value = new [] { StructureType.Rectangular, StructureType.Circular, StructureType.Shaped };
+            AvailableTypes.Value = new[] { StructureType.Rectangular, StructureType.Circular, StructureType.Shaped };
             Type.ValueChanged += OnStructureTypeChange;
         }
 

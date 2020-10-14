@@ -3,13 +3,17 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
+
 using Bery0za.Mazerator.Types.Rectangular;
 
 namespace Bery0za.Mazerator.Forms.Drawers
 {
     public class RectangularMazeDrawer : MazeDrawer<RectangularStructure>
-	{
-        protected override void FillMaze(Graphics graphics, RectangularStructure structure, DrawingParameters parameters, IEnumerable<Cell> order)
+    {
+        protected override void FillMaze(Graphics graphics,
+                                         RectangularStructure structure,
+                                         DrawingParameters parameters,
+                                         IEnumerable<Cell> order)
         {
             graphics.TranslateTransform(parameters.strokeWidth, parameters.strokeWidth);
 
@@ -50,7 +54,9 @@ namespace Bery0za.Mazerator.Forms.Drawers
             graphics.ResetTransform();
         }
 
-        protected override void StrokeMaze(Graphics graphics, RectangularStructure structure, DrawingParameters parameters)
+        protected override void StrokeMaze(Graphics graphics,
+                                           RectangularStructure structure,
+                                           DrawingParameters parameters)
         {
             graphics.TranslateTransform(parameters.strokeWidth, parameters.strokeWidth);
 
@@ -78,17 +84,22 @@ namespace Bery0za.Mazerator.Forms.Drawers
                     {
                         graphics.DrawLine(pen, p1, p4);
                     }
+
                     if (!structure.ContainsCellAtPosition(new RectangularPosition(x, y - 1)))
                     {
                         graphics.DrawLine(pen, p1, p2);
                     }
+
                     if (!structure.ContainsCellAtPosition(new RectangularPosition(x + 1, y))
-                        || !structure.IsAdjacent(curCell, structure.GetCellAtPosition(new RectangularPosition(x + 1, y))))
+                        || !structure.IsAdjacent(curCell,
+                                                 structure.GetCellAtPosition(new RectangularPosition(x + 1, y))))
                     {
                         graphics.DrawLine(pen, p2, p3);
                     }
+
                     if (!structure.ContainsCellAtPosition(new RectangularPosition(x, y + 1))
-                        || !structure.IsAdjacent(curCell, structure.GetCellAtPosition(new RectangularPosition(x, y + 1))))
+                        || !structure.IsAdjacent(curCell,
+                                                 structure.GetCellAtPosition(new RectangularPosition(x, y + 1))))
                     {
                         graphics.DrawLine(pen, p3, p4);
                     }
@@ -98,12 +109,13 @@ namespace Bery0za.Mazerator.Forms.Drawers
             graphics.ResetTransform();
         }
 
-        protected override (int width, int height) CalculateBitmapSize(RectangularStructure structure, DrawingParameters parameters)
+        protected override (int width, int height) CalculateBitmapSize(RectangularStructure structure,
+                                                                       DrawingParameters parameters)
         {
             int width = (int)(structure.parameters.width * parameters.cellSize + parameters.strokeWidth * 2);
             int height = (int)(structure.parameters.height * parameters.cellSize + parameters.strokeWidth * 2);
 
             return (width, height);
         }
-	}
+    }
 }

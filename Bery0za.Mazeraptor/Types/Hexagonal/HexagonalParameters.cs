@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Bery0za.Mazerator.Types.Hexagonal
-{    
+{
     public class HexagonalParameters : Parameters
     {
         public readonly uint rings;

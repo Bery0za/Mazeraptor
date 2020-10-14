@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 using Bery0za.Ariadne;
 using Bery0za.Ariadne.Framework;
 using Bery0za.Mazerator.Forms.ViewModels;
@@ -16,8 +17,11 @@ namespace Bery0za.Mazerator.Forms.Views
 {
     public partial class ShapedStructureV : UserControl, IBindable<ShapedStructureVM>, IStructureV
     {
-        public PropertyWrapper<InteriorSelector> Type = new PropertyWrapper<InteriorSelector>(ViewModels.InteriorSelector.Alpha);
-        public PropertyWrapper<IEnumerable<InteriorSelector>> AvailableTypes = new PropertyWrapper<IEnumerable<InteriorSelector>>();
+        public PropertyWrapper<InteriorSelector> Type =
+            new PropertyWrapper<InteriorSelector>(ViewModels.InteriorSelector.Alpha);
+
+        public PropertyWrapper<IEnumerable<InteriorSelector>> AvailableTypes =
+            new PropertyWrapper<IEnumerable<InteriorSelector>>();
 
         private OpenFileDialog _loadImageDialog;
 
@@ -30,7 +34,9 @@ namespace Bery0za.Mazerator.Forms.Views
             _loadImageDialog = loadImageDialog;
         }
 
-        public void OnContextAttach(ShapedStructureVM context, IList<IBinding> bindings, IBinder<ShapedStructureVM> binder)
+        public void OnContextAttach(ShapedStructureVM context,
+                                    IList<IBinding> bindings,
+                                    IBinder<ShapedStructureVM> binder)
         {
             bindings.Add(Binder.Side(Type).To(context.Type).Using(BindingFlow.TwoWay));
             bindings.Add(Binder.Side(AvailableTypes).To(context.AvailableTypes).Using(BindingFlow.TwoWay));
@@ -42,9 +48,11 @@ namespace Bery0za.Mazerator.Forms.Views
             shapeSelectorList.SelectedValueChanged += ShapeSelectorListOnSelectedValueChanged;
         }
 
-        private void AvailableTypesOnValueChanged(IEnumerable<InteriorSelector> value, IEnumerable<InteriorSelector> previousvalue)
+        private void AvailableTypesOnValueChanged(IEnumerable<InteriorSelector> value,
+                                                  IEnumerable<InteriorSelector> previousvalue)
         {
-            shapeSelectorList.DataSource = value.ToArray();}
+            shapeSelectorList.DataSource = value.ToArray();
+        }
 
         private void ShapeSelectorListOnSelectedValueChanged(object sender, EventArgs e)
         {

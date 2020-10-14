@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+
 using Bery0za.Mazerator.Forms.ViewModels;
 
 namespace Bery0za.Mazerator.Forms.Drawers
@@ -13,8 +14,13 @@ namespace Bery0za.Mazerator.Forms.Drawers
         public readonly bool fillEnabled;
         public readonly float cellSize;
 
-        public DrawingParameters(float strokeWidth, Color strokeColor, bool strokeEnabled, FillType fillType,
-            Color fillColor, bool fillEnabled, float cellSize)
+        public DrawingParameters(float strokeWidth,
+                                 Color strokeColor,
+                                 bool strokeEnabled,
+                                 FillType fillType,
+                                 Color fillColor,
+                                 bool fillEnabled,
+                                 float cellSize)
         {
             this.strokeWidth = strokeWidth;
             this.strokeColor = strokeColor;

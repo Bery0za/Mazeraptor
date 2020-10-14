@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 using Bery0za.Ariadne;
 using Bery0za.Ariadne.Framework;
 using Bery0za.Mazerator.Forms.Drawers;
@@ -45,10 +46,20 @@ namespace Bery0za.Mazerator.Forms.Views
         private EventHandler _drawClickHandler;
         private EventHandler _saveClickHandler;
 
-        public DrawerV(GroupBox drawerBox, Button drawButton, Button strokeColorButton,
-            CheckBox strokeEnabledCheckBox, NumericUpDown strokeWidthNumeric, Button fillColorButton,
-            CheckBox fillEnabledCheckBox, ComboBox fillTypeList, NumericUpDown cellSizeNumeric, CheckBox autoDrawCheckBox,
-            ColorDialog colorDialog, PictureBox pictureBox, Button saveImageButton, SaveFileDialog saveFileDialog)
+        public DrawerV(GroupBox drawerBox,
+                       Button drawButton,
+                       Button strokeColorButton,
+                       CheckBox strokeEnabledCheckBox,
+                       NumericUpDown strokeWidthNumeric,
+                       Button fillColorButton,
+                       CheckBox fillEnabledCheckBox,
+                       ComboBox fillTypeList,
+                       NumericUpDown cellSizeNumeric,
+                       CheckBox autoDrawCheckBox,
+                       ColorDialog colorDialog,
+                       PictureBox pictureBox,
+                       Button saveImageButton,
+                       SaveFileDialog saveFileDialog)
         {
             _drawerBox = drawerBox;
             _drawButton = drawButton;

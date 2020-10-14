@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 using Bery0za.Ariadne;
 using Bery0za.Ariadne.Framework;
 using Bery0za.Mazerator.Forms.ViewModels;
@@ -30,7 +31,13 @@ namespace Bery0za.Mazerator.Forms.Views
 
         private EventHandler _generateClickHandler;
 
-        public GeneratorV(FlowLayoutPanel structureLayout, ComboBox structureList, FlowLayoutPanel generatorLayout, ComboBox generatorList, Button generateButton, TextBox seedTextBox, OpenFileDialog loadDialog)
+        public GeneratorV(FlowLayoutPanel structureLayout,
+                          ComboBox structureList,
+                          FlowLayoutPanel generatorLayout,
+                          ComboBox generatorList,
+                          Button generateButton,
+                          TextBox seedTextBox,
+                          OpenFileDialog loadDialog)
         {
             _structureLayout = structureLayout;
             _structureList = structureList;
@@ -61,12 +68,14 @@ namespace Bery0za.Mazerator.Forms.Views
             _seedTextBox.TextChanged += SeedTextBoxOnTextChanged;
         }
 
-        private void OnStructureSelectorAttaching(StructureSelectorVM context, IBinder<IContextWrapper<StructureSelectorVM>> binder)
+        private void OnStructureSelectorAttaching(StructureSelectorVM context,
+                                                  IBinder<IContextWrapper<StructureSelectorVM>> binder)
         {
             binder.AttachChild(context, _structureSelectorV);
         }
 
-        private void OnGeneratorSelectorAttaching(GeneratorSelectorVM context, IBinder<IContextWrapper<GeneratorSelectorVM>> binder)
+        private void OnGeneratorSelectorAttaching(GeneratorSelectorVM context,
+                                                  IBinder<IContextWrapper<GeneratorSelectorVM>> binder)
         {
             binder.AttachChild(context, _generatorSelectorV);
         }

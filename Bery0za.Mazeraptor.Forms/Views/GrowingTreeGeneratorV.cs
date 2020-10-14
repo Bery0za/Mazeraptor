@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 using Bery0za.Ariadne;
 using Bery0za.Ariadne.Framework;
 using Bery0za.Mazerator.Forms.ViewModels;
@@ -26,8 +27,11 @@ namespace Bery0za.Mazerator.Forms.Views
         public PropertyWrapper<bool> LeftCellParameterAvailable = new PropertyWrapper<bool>();
         public PropertyWrapper<NeighborSelector> NeighborSelector = new PropertyWrapper<NeighborSelector>();
 
-        public PropertyWrapper<IEnumerable<CellSelector>> AvailableCellSelectors = new PropertyWrapper<IEnumerable<CellSelector>>();
-        public PropertyWrapper<IEnumerable<NeighborSelector>> AvailableNeighborSelectors = new PropertyWrapper<IEnumerable<NeighborSelector>>();
+        public PropertyWrapper<IEnumerable<CellSelector>> AvailableCellSelectors =
+            new PropertyWrapper<IEnumerable<CellSelector>>();
+
+        public PropertyWrapper<IEnumerable<NeighborSelector>> AvailableNeighborSelectors =
+            new PropertyWrapper<IEnumerable<NeighborSelector>>();
 
         private PropertyChanged<bool> _firstNumericEnabled;
         private PropertyChanged<bool> _carvingNumericEnabled;
@@ -38,20 +42,40 @@ namespace Bery0za.Mazerator.Forms.Views
             InitializeComponent();
         }
 
-        public void OnContextAttach(GrowingTreeGeneratorVM context, IList<IBinding> bindings, IBinder<GrowingTreeGeneratorVM> binder)
+        public void OnContextAttach(GrowingTreeGeneratorVM context,
+                                    IList<IBinding> bindings,
+                                    IBinder<GrowingTreeGeneratorVM> binder)
         {
             bindings.Add(Binder.Side(FirstCellSelector).To(context.FirstCellSelector).Using(BindingFlow.TwoWay));
             bindings.Add(Binder.Side(FirstCellParameter).To(context.FirstCellParameter).Using(BindingFlow.TwoWay));
-            bindings.Add(Binder.Side(FirstCellParameterAvailable).To(context.FirstCellParameterAvailable).Using(BindingFlow.TwoWay));
+
+            bindings.Add(Binder.Side(FirstCellParameterAvailable)
+                               .To(context.FirstCellParameterAvailable)
+                               .Using(BindingFlow.TwoWay));
+
             bindings.Add(Binder.Side(CarvingCellSelector).To(context.CarvingCellSelector).Using(BindingFlow.TwoWay));
             bindings.Add(Binder.Side(CarvingCellParameter).To(context.CarvingCellParameter).Using(BindingFlow.TwoWay));
-            bindings.Add(Binder.Side(CarvingCellParameterAvailable).To(context.CarvingCellParameterAvailable).Using(BindingFlow.TwoWay));
+
+            bindings.Add(Binder.Side(CarvingCellParameterAvailable)
+                               .To(context.CarvingCellParameterAvailable)
+                               .Using(BindingFlow.TwoWay));
+
             bindings.Add(Binder.Side(LeftCellSelector).To(context.LeftCellSelector).Using(BindingFlow.TwoWay));
             bindings.Add(Binder.Side(LeftCellParameter).To(context.LeftCellParameter).Using(BindingFlow.TwoWay));
-            bindings.Add(Binder.Side(LeftCellParameterAvailable).To(context.LeftCellParameterAvailable).Using(BindingFlow.TwoWay));
+
+            bindings.Add(Binder.Side(LeftCellParameterAvailable)
+                               .To(context.LeftCellParameterAvailable)
+                               .Using(BindingFlow.TwoWay));
+
             bindings.Add(Binder.Side(NeighborSelector).To(context.NeighborSelector).Using(BindingFlow.TwoWay));
-            bindings.Add(Binder.Side(AvailableCellSelectors).To(context.AvailableCellSelectors).Using(BindingFlow.OneWay));
-            bindings.Add(Binder.Side(AvailableNeighborSelectors).To(context.AvailableNeighborSelectors).Using(BindingFlow.OneWay));
+
+            bindings.Add(Binder.Side(AvailableCellSelectors)
+                               .To(context.AvailableCellSelectors)
+                               .Using(BindingFlow.OneWay));
+
+            bindings.Add(Binder.Side(AvailableNeighborSelectors)
+                               .To(context.AvailableNeighborSelectors)
+                               .Using(BindingFlow.OneWay));
 
             _firstNumericEnabled = NumericEnabled(firstNumeric);
             _carvingNumericEnabled = NumericEnabled(carvingNumeric);
@@ -81,30 +105,32 @@ namespace Bery0za.Mazerator.Forms.Views
         {
             return (value, previous) => numericUpDown.Enabled = value;
         }
-        
+
         private void OnFirstCellParameterValueChange(float v, float p)
         {
-            firstNumeric.Value = (decimal) v;
+            firstNumeric.Value = (decimal)v;
         }
 
         private void OnCarvingCellParameterValueChange(float v, float p)
         {
-            carvingNumeric.Value = (decimal) v;
+            carvingNumeric.Value = (decimal)v;
         }
 
         private void OnLeftCellParameterValueChange(float v, float p)
         {
-            leftNumeric.Value = (decimal) v;
+            leftNumeric.Value = (decimal)v;
         }
 
-        private void OnAvailableCellSelectorsChange(IEnumerable<CellSelector> current, IEnumerable<CellSelector> previous)
+        private void OnAvailableCellSelectorsChange(IEnumerable<CellSelector> current,
+                                                    IEnumerable<CellSelector> previous)
         {
             firstCellList.DataSource = current.ToArray();
             carvingCellList.DataSource = current.ToArray();
             leftCellList.DataSource = current.ToArray();
         }
 
-        private void OnAvailableNeighborSelectorChange(IEnumerable<NeighborSelector> current, IEnumerable<NeighborSelector> previous)
+        private void OnAvailableNeighborSelectorChange(IEnumerable<NeighborSelector> current,
+                                                       IEnumerable<NeighborSelector> previous)
         {
             neighborCellList.DataSource = current.ToArray();
         }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 using Bery0za.Ariadne;
 using Bery0za.Ariadne.Framework;
 using Bery0za.Mazerator.Forms.ViewModels;
@@ -17,7 +18,7 @@ namespace Bery0za.Mazerator.Forms.Views
     {
         public PropertyWrapper<float> Progress = new PropertyWrapper<float>(0);
         public PropertyWrapper<bool> Started = new PropertyWrapper<bool>(false);
-        public PropertyWrapper<bool> Canceled = new PropertyWrapper<bool>(false); 
+        public PropertyWrapper<bool> Canceled = new PropertyWrapper<bool>(false);
         public PropertyWrapper<bool> Finished = new PropertyWrapper<bool>(false);
 
         private Form _owner;
@@ -32,8 +33,8 @@ namespace Bery0za.Mazerator.Forms.Views
         public void OnContextAttach(ProgressVM context, IList<IBinding> bindings, IBinder<ProgressVM> binder)
         {
             bindings.Add(Binder.Side(Progress).To(context.Progress).Using(BindingFlow.OneWay));
-            bindings.Add(Binder.Side(Started).To(context.Started).Using(BindingFlow.OneWay)); 
-            bindings.Add(Binder.Side(Canceled).To(context.Canceled).Using(BindingFlow.TwoWay)); 
+            bindings.Add(Binder.Side(Started).To(context.Started).Using(BindingFlow.OneWay));
+            bindings.Add(Binder.Side(Canceled).To(context.Canceled).Using(BindingFlow.TwoWay));
             bindings.Add(Binder.Side(Finished).To(context.Finished).Using(BindingFlow.OneWay));
 
             Progress.ValueChanged += OnProgressValueChange;
@@ -45,7 +46,7 @@ namespace Bery0za.Mazerator.Forms.Views
 
         private void OnProgressValueChange(float v, float pv)
         {
-            progressBar.Value = (int) v;
+            progressBar.Value = (int)v;
         }
 
         private void OnStartedValueChange(bool v, bool pv)

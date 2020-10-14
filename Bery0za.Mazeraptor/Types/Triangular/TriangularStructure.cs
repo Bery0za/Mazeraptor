@@ -10,10 +10,7 @@ namespace Bery0za.Mazerator.Types.Triangular
         private Dictionary<ulong, Cell> cells;
 
         public TriangularStructure(TriangularParameters parameters)
-            : base(parameters)
-        {
-
-        }
+            : base(parameters) { }
 
         public override void Init()
         {
@@ -44,7 +41,7 @@ namespace Bery0za.Mazerator.Types.Triangular
         {
             return cells.ContainsKey(Cantor.Tuple(position.q, position.r, position.s));
         }
-        
+
         protected override Cell CellAtPosition(TriangularPosition position)
         {
             return cells[Cantor.Tuple(position.q, position.r, position.s)];

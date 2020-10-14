@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Bery0za.Core.Extensions;
 
 namespace Bery0za.Mazerator.Solvers
 {
     public class AStarSolver : MazeSolver
-	{
+    {
         private HashSet<Cell> closedSet;
         private HashSet<Cell> openSet;
 
@@ -17,25 +18,25 @@ namespace Bery0za.Mazerator.Solvers
         private Func<Cell, Cell, float> heuristic;
         private Func<Cell, Cell, float> adjacentDistance;
 
-       public AStarSolver(Func<Cell, Cell, float> heuristic = null, Func<Cell, Cell, float> adjacentDistance = null)
+        public AStarSolver(Func<Cell, Cell, float> heuristic = null, Func<Cell, Cell, float> adjacentDistance = null)
             : base()
-		{
+        {
             this.heuristic = heuristic ?? DefaultHeuristic;
             this.adjacentDistance = adjacentDistance ?? DefaultAdjacentDistance;
-		}
+        }
 
         override protected void ProcessSolving(Cell startCell, Cell endCell)
-		{
-		    if (AStar(startCell, endCell))
-		    {
-		        SolutionFound(ReconstructPath(cameFrom, startCell, endCell));
-		    }
-		    else
-		    {
-		        SolutionNotFound();
-		    }
+        {
+            if (AStar(startCell, endCell))
+            {
+                SolutionFound(ReconstructPath(cameFrom, startCell, endCell));
+            }
+            else
+            {
+                SolutionNotFound();
+            }
         }
-        
+
         private bool AStar(Cell startCell, Cell endCell)
         {
             float procTotalCount = structure.Count() * 0.01f;
@@ -45,12 +46,13 @@ namespace Bery0za.Mazerator.Solvers
             cameFrom = new Dictionary<Cell, Cell>();
             gScore = new Dictionary<Cell, float>();
             fScore = new Dictionary<Cell, float>();
-            
+
             openSet.Add(startCell);
             gScore.Add(startCell, 0);
             fScore.Add(startCell, heuristic(startCell, endCell));
 
             Cell curCell;
+
             while (openSet.Any())
             {
                 curCell = fScore.OrderBy(kvp => kvp.Value).First(kvp => openSet.Contains(kvp.Key)).Key;
@@ -64,8 +66,8 @@ namespace Bery0za.Mazerator.Solvers
                 closedSet.Add(curCell);
 
                 foreach (Cell adjacentCell in curCell.AdjacentCells)
-	            {
-		            if (closedSet.Contains(adjacentCell))
+                {
+                    if (closedSet.Contains(adjacentCell))
                     {
                         continue;
                     }
@@ -76,6 +78,7 @@ namespace Bery0za.Mazerator.Solvers
                     }
 
                     float tentativeGScore = gScore[curCell] + adjacentDistance(curCell, adjacentCell);
+
                     if (tentativeGScore >= (gScore.GetValueOrDefault(adjacentCell, float.PositiveInfinity)))
                     {
                         continue;
@@ -85,14 +88,14 @@ namespace Bery0za.Mazerator.Solvers
 
                     gScore.Add(adjacentCell, tentativeGScore);
                     fScore.Add(adjacentCell, gScore[adjacentCell] + heuristic(adjacentCell, endCell));
-	            }
+                }
 
                 TrackProgress(cameFrom.Count / procTotalCount);
                 if (cancel) return false;
             }
 
             return false;
-		}
+        }
 
         public static float DefaultHeuristic(Cell cellA, Cell cellB)
         {
@@ -108,5 +111,5 @@ namespace Bery0za.Mazerator.Solvers
         {
             return 1f;
         }
-	}
+    }
 }

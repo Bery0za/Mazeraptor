@@ -18,11 +18,8 @@ namespace Bery0za.Mazerator.Solvers
         protected bool cancel;
 
         private float _percentage;
-		
-		public MazeSolver()
-        {
-            
-        }
+
+        public MazeSolver() { }
 
         public void SolveMaze(Maze maze, Cell startCell, Cell endCell)
         {
@@ -74,6 +71,7 @@ namespace Bery0za.Mazerator.Solvers
 
             Cell addedCell = endCell;
             Cell prevCell;
+
             while (addedCell != startCell)
             {
                 prevCell = cameFrom[addedCell];

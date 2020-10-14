@@ -46,10 +46,10 @@ namespace Bery0za.Mazerator.Types
             {
                 return GetCellAtPosition(typedPosition);
             }
-            
+
             throw new InvalidCastException("This structure uses another type of positioning");
         }
-        
+
         protected Cell GetCellAtPosition(TPosition position)
         {
             if (ContainsAtPosition(position))
@@ -64,7 +64,7 @@ namespace Bery0za.Mazerator.Types
         {
             AddNeighborsForCells();
         }
-        
+
         public HashSet<Cell> CalcNeighborsForCell(Cell cell)
         {
             if (this.Contains(cell))
@@ -110,7 +110,7 @@ namespace Bery0za.Mazerator.Types
         public void SetNeighbour(Cell cell, HashSet<Cell> neighbors)
         {
             cell.NeighbourCells.UnionWith(neighbors);
-            
+
             foreach (Cell neighbour in neighbors)
             {
                 neighbour.NeighbourCells.Add(cell);

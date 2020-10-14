@@ -10,10 +10,7 @@ namespace Bery0za.Mazerator.Types.Hexagonal
         private Dictionary<ulong, Cell> cells;
 
         public HexagonalStructure(HexagonalParameters parameters)
-            : base(parameters)
-        {
-
-        }
+            : base(parameters) { }
 
         public override void Init()
         {
@@ -38,7 +35,7 @@ namespace Bery0za.Mazerator.Types.Hexagonal
         {
             return cells.ContainsKey(Cantor.Pairing(position.q, position.r));
         }
-        
+
         protected override Cell CellAtPosition(HexagonalPosition position)
         {
             return cells[Cantor.Pairing(position.q, position.r)];
@@ -61,6 +58,7 @@ namespace Bery0za.Mazerator.Types.Hexagonal
             foreach (HexagonalPosition neighbour in HexagonalStructure.neighbors)
             {
                 HexagonalPosition nPos = neighbour + position;
+
                 if (ContainsAtPosition(nPos))
                 {
                     neighbors.Add(CellAtPosition(nPos));

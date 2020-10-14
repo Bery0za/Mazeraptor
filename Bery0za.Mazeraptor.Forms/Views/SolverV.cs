@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 using Bery0za.Ariadne;
 using Bery0za.Ariadne.Framework;
 using Bery0za.Mazerator.Forms.ViewModels;
@@ -13,7 +14,10 @@ namespace Bery0za.Mazerator.Forms.Views
     public class SolverV : IBindable<SolverVM>
     {
         public PropertyWrapper<bool> SolvingEnabled = new PropertyWrapper<bool>();
-        public PropertyWrapper<IEnumerable<Cell>> Cells = new PropertyWrapper<IEnumerable<Cell>>(Enumerable.Empty<Cell>());
+
+        public PropertyWrapper<IEnumerable<Cell>> Cells =
+            new PropertyWrapper<IEnumerable<Cell>>(Enumerable.Empty<Cell>());
+
         public PropertyWrapper<Cell> SourceCell = new PropertyWrapper<Cell>();
         public PropertyWrapper<Cell> TargetCell = new PropertyWrapper<Cell>();
         public PropertyWrapper<SolverType> Type = new PropertyWrapper<SolverType>();
@@ -27,7 +31,11 @@ namespace Bery0za.Mazerator.Forms.Views
 
         private EventHandler _solveClickHandler;
 
-        public SolverV(GroupBox solverBox, ComboBox solverList, ComboBox sourceCellList, ComboBox targetCellList, Button solveButton)
+        public SolverV(GroupBox solverBox,
+                       ComboBox solverList,
+                       ComboBox sourceCellList,
+                       ComboBox targetCellList,
+                       Button solveButton)
         {
             _solverBox = solverBox;
             _solverList = solverList;

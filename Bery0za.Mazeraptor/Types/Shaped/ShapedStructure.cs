@@ -8,12 +8,9 @@ namespace Bery0za.Mazerator.Types.Shaped
     public class ShapedStructure : Structure<ShapedParameters, RectangularPosition>
     {
         private Dictionary<ulong, Cell> cells;
-        
-        public ShapedStructure(ShapedParameters parameters)
-            : base(parameters)
-        {
 
-        }
+        public ShapedStructure(ShapedParameters parameters)
+            : base(parameters) { }
 
         public override void Init()
         {
@@ -37,11 +34,14 @@ namespace Bery0za.Mazerator.Types.Shaped
 
         protected override bool ContainsAtPosition(RectangularPosition position)
         {
-            if (position.x < 0 || position.y < 0 || position.x >= parameters.shape.Width || position.y >= parameters.shape.Height) return false;
+            if (position.x < 0
+                || position.y < 0
+                || position.x >= parameters.shape.Width
+                || position.y >= parameters.shape.Height) return false;
 
             return parameters.shape.ContainsAtPosition(position);
         }
-        
+
         protected override Cell CellAtPosition(RectangularPosition position)
         {
             return cells[Cantor.Pairing(position.x, position.y)];
