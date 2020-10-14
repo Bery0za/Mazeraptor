@@ -21,11 +21,11 @@ namespace Bery0za.Mazerator
             Seed = seed;
             Structure = structure;
             Generator = generator;
-            _random = new Random(Seed.GetHashCode());
         }
 
         public void Generate()
         {
+            _random = new Random(Seed.GetHashCode());
             Structure.Init();
             Generator.GenerateMaze(Structure, _random);
         }
