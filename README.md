@@ -5,7 +5,7 @@ Do you need mazes? This library is for you. Mazeraptor is a .NET library able to
 
 ```c#
 IStructure structure = new CircularStructure(new CircularParameters(10, 1.2f));
-MazeGenerator = generator = new RecursiveBacktrackerGenerator();
+MazeGenerator generator = new RecursiveBacktrackerGenerator();
 Maze maze = new Maze("Theseus", structure, generator);
 maze.Generate();
 
