@@ -8,15 +8,15 @@ namespace Bery0za.Mazerator.Solvers
 {
     public class AStarSolver : MazeSolver
     {
-        private HashSet<Cell> closedSet;
-        private HashSet<Cell> openSet;
+        HashSet<Cell> closedSet;
+        HashSet<Cell> openSet;
 
-        private Dictionary<Cell, Cell> cameFrom;
-        private Dictionary<Cell, float> gScore;
-        private Dictionary<Cell, float> fScore;
+        Dictionary<Cell, Cell> cameFrom;
+        Dictionary<Cell, float> gScore;
+        Dictionary<Cell, float> fScore;
 
-        private Func<Cell, Cell, float> heuristic;
-        private Func<Cell, Cell, float> adjacentDistance;
+        Func<Cell, Cell, float> heuristic;
+        Func<Cell, Cell, float> adjacentDistance;
 
         public AStarSolver(Func<Cell, Cell, float> heuristic = null, Func<Cell, Cell, float> adjacentDistance = null)
             : base()
@@ -37,9 +37,9 @@ namespace Bery0za.Mazerator.Solvers
             }
         }
 
-        private bool AStar(Cell startCell, Cell endCell)
+        bool AStar(Cell startCell, Cell endCell)
         {
-            float procTotalCount = structure.Count() * 0.01f;
+            var procTotalCount = structure.Count() * 0.01f;
 
             closedSet = new HashSet<Cell>();
             openSet = new HashSet<Cell>();
@@ -65,7 +65,7 @@ namespace Bery0za.Mazerator.Solvers
                 openSet.Remove(curCell);
                 closedSet.Add(curCell);
 
-                foreach (Cell adjacentCell in curCell.AdjacentCells)
+                foreach (var adjacentCell in curCell.AdjacentCells)
                 {
                     if (closedSet.Contains(adjacentCell))
                     {
@@ -77,7 +77,7 @@ namespace Bery0za.Mazerator.Solvers
                         openSet.Add(adjacentCell);
                     }
 
-                    float tentativeGScore = gScore[curCell] + adjacentDistance(curCell, adjacentCell);
+                    var tentativeGScore = gScore[curCell] + adjacentDistance(curCell, adjacentCell);
 
                     if (tentativeGScore >= (gScore.GetValueOrDefault(adjacentCell, float.PositiveInfinity)))
                     {

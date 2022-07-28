@@ -34,7 +34,7 @@ namespace Bery0za.Mazerator.Types.Triangular
 
         protected override float DistanceTo(TriangularPosition pos)
         {
-            return Math.Abs(this.q - pos.q) + Math.Abs(this.r - pos.r) + Math.Abs(this.s - pos.s);
+            return Math.Abs(q - pos.q) + Math.Abs(r - pos.r) + Math.Abs(s - pos.s);
         }
 
         public static TriangularPosition operator +(TriangularPosition a, TriangularPosition b)

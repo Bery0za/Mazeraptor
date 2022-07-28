@@ -11,7 +11,7 @@ namespace Bery0za.Mazerator
         public string Seed { get; set; }
         public IStructure Structure { get; private set; }
         public MazeGenerator Generator { get; private set; }
-        private Random _random;
+        Random _random;
 
         public Maze(string seed, IStructure structure, MazeGenerator generator)
         {

@@ -17,7 +17,7 @@ namespace Bery0za.Mazerator.Solvers
         protected IStructure structure;
         protected bool cancel;
 
-        private float _percentage;
+        float _percentage;
 
         public MazeSolver() { }
 
@@ -65,11 +65,11 @@ namespace Bery0za.Mazerator.Solvers
 
         protected List<Cell> ReconstructPath(Dictionary<Cell, Cell> cameFrom, Cell startCell, Cell endCell)
         {
-            List<Cell> foundPath = new List<Cell>();
+            var foundPath = new List<Cell>();
 
             foundPath.Add(endCell);
 
-            Cell addedCell = endCell;
+            var addedCell = endCell;
             Cell prevCell;
 
             while (addedCell != startCell)

@@ -22,8 +22,8 @@ namespace Bery0za.Mazerator.Generators
         protected IStructure structure;
         protected bool cancel;
 
-        private bool _trackGenerationPath;
-        private float _percentage;
+        bool _trackGenerationPath;
+        float _percentage;
 
         public MazeGenerator(bool trackGenerationPath = false)
         {
@@ -129,7 +129,7 @@ namespace Bery0za.Mazerator.Generators
 
         public static Cell RandomNeighbourSelector(Cell cell, Random random)
         {
-            IEnumerable<Cell> notAdjacentCells = cell.NeighbourCells.Except(cell.AdjacentCells);
+            var notAdjacentCells = cell.NeighbourCells.Except(cell.AdjacentCells);
             return notAdjacentCells.ElementAt(random.Next(notAdjacentCells.Count()));
         }
     }

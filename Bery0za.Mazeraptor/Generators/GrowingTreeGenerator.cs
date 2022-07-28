@@ -6,14 +6,14 @@ namespace Bery0za.Mazerator.Generators
 {
     public class GrowingTreeGenerator : MazeGenerator
     {
-        private readonly CellSelector firstSelector;
-        private readonly CellSelector carvingCellSelector;
-        private readonly CellSelector leftCellSelector;
-        private readonly NeighborSelector neighborSelector;
+        readonly CellSelector firstSelector;
+        readonly CellSelector carvingCellSelector;
+        readonly CellSelector leftCellSelector;
+        readonly NeighborSelector neighborSelector;
 
-        private List<Cell> carvingCells;
-        private HashSet<Cell> notVisitedCells;
-        private HashSet<Cell> visitedCells;
+        List<Cell> carvingCells;
+        HashSet<Cell> notVisitedCells;
+        HashSet<Cell> visitedCells;
 
         public GrowingTreeGenerator(CellSelector firstSelector = null,
                                     CellSelector carvingCellSelector = null,
@@ -30,7 +30,7 @@ namespace Bery0za.Mazerator.Generators
 
         protected override bool ProcessGenerating(Random random)
         {
-            float procTotalCount = structure.Count() * 0.01f;
+            var procTotalCount = structure.Count() * 0.01f;
 
             carvingCells = new List<Cell>();
             notVisitedCells = new HashSet<Cell>(structure);
@@ -43,7 +43,7 @@ namespace Bery0za.Mazerator.Generators
                 TrackProgress(visitedCells.Count / procTotalCount);
                 if (cancel) return false;
 
-                Cell curCell = carvingCellSelector(carvingCells, random);
+                var curCell = carvingCellSelector(carvingCells, random);
                 VisitCell(curCell);
 
                 if (curCell.NeighbourCells.Except(visitedCells).Any())

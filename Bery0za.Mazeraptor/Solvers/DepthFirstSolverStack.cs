@@ -6,8 +6,8 @@ namespace Bery0za.Mazerator.Solvers
 {
     public class DepthFirstSolverStack : MazeSolver
     {
-        private HashSet<Cell> plottedCells;
-        private Stack<Cell> openSet;
+        HashSet<Cell> plottedCells;
+        Stack<Cell> openSet;
 
         public DepthFirstSolverStack()
             : base() { }
@@ -24,9 +24,9 @@ namespace Bery0za.Mazerator.Solvers
             }
         }
 
-        private bool DFS(Cell startCell, Cell endCell)
+        bool DFS(Cell startCell, Cell endCell)
         {
-            float procTotalCount = structure.Count() * 0.01f;
+            var procTotalCount = structure.Count() * 0.01f;
 
             plottedCells = new HashSet<Cell>();
             openSet = new Stack<Cell>();

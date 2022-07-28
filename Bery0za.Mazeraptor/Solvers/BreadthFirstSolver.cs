@@ -6,8 +6,8 @@ namespace Bery0za.Mazerator.Solvers
 {
     public class BreadthFirstSolver : MazeSolver
     {
-        private Dictionary<Cell, Cell> cameFrom = new Dictionary<Cell, Cell>();
-        private Queue<Cell> openSet;
+        Dictionary<Cell, Cell> cameFrom = new Dictionary<Cell, Cell>();
+        Queue<Cell> openSet;
 
         public BreadthFirstSolver()
             : base() { }
@@ -24,9 +24,9 @@ namespace Bery0za.Mazerator.Solvers
             }
         }
 
-        private bool BFS(Cell startCell, Cell endCell)
+        bool BFS(Cell startCell, Cell endCell)
         {
-            float procTotalCount = structure.Count() * 0.01f;
+            var procTotalCount = structure.Count() * 0.01f;
 
             openSet = new Queue<Cell>();
             openSet.Enqueue(startCell);
@@ -35,10 +35,10 @@ namespace Bery0za.Mazerator.Solvers
 
             do
             {
-                Cell curCell = openSet.Dequeue();
+                var curCell = openSet.Dequeue();
                 neighborSet = curCell.AdjacentCells.Except(cameFrom.Values);
 
-                foreach (Cell nextCell in neighborSet)
+                foreach (var nextCell in neighborSet)
                 {
                     cameFrom.Add(nextCell, curCell);
                     openSet.Enqueue(nextCell);

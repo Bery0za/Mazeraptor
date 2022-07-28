@@ -5,7 +5,7 @@ namespace Bery0za.Mazerator.Types.Circular
 {
     public static class CircularFunctions
     {
-        private const float PI2 = (float)(Math.PI * 2);
+        const float PI2 = (float)(Math.PI * 2);
 
         public static int CellsInRing(int ring, float ratio = 1, int prevRingCount = 0)
         {
@@ -14,14 +14,14 @@ namespace Bery0za.Mazerator.Types.Circular
                 return 1;
             }
 
-            float circumference = PI2 * ring;
+            var circumference = PI2 * ring;
 
             if (ring == 1)
             {
                 return (int)(circumference * ratio);
             }
 
-            int prevCount = prevRingCount == 0 ? CellsInRing(ring - 1, ratio) : prevRingCount;
+            var prevCount = prevRingCount == 0 ? CellsInRing(ring - 1, ratio) : prevRingCount;
 
             if ((circumference * ratio) >= (prevCount * 2))
             {

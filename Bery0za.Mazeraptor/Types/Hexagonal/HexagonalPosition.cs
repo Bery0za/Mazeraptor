@@ -35,7 +35,7 @@ namespace Bery0za.Mazerator.Types.Hexagonal
 
         protected override float DistanceTo(HexagonalPosition pos)
         {
-            return (Math.Abs(this.q - pos.q) + Math.Abs(this.r - pos.r) + Math.Abs(this.s - pos.s)) * 0.5f;
+            return (Math.Abs(q - pos.q) + Math.Abs(r - pos.r) + Math.Abs(s - pos.s)) * 0.5f;
         }
 
         public static HexagonalPosition operator +(HexagonalPosition a, HexagonalPosition b)

@@ -27,7 +27,7 @@ namespace Bery0za.Mazerator.Types.Rectangular
 
         protected override float DistanceTo(RectangularPosition pos)
         {
-            return Math.Abs(this.x - pos.x) + Math.Abs(this.y - pos.y);
+            return Math.Abs(x - pos.x) + Math.Abs(y - pos.y);
         }
 
         public static RectangularPosition operator +(RectangularPosition a, RectangularPosition b)

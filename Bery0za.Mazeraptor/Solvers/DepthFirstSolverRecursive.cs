@@ -6,8 +6,8 @@ namespace Bery0za.Mazerator.Solvers
 {
     public class DepthFirstSolverRecursive : MazeSolver
     {
-        private HashSet<Cell> plottedCells;
-        private List<Cell> foundPath;
+        HashSet<Cell> plottedCells;
+        List<Cell> foundPath;
 
         public DepthFirstSolverRecursive()
             : base() { }
@@ -26,9 +26,9 @@ namespace Bery0za.Mazerator.Solvers
             }
         }
 
-        private bool DFS(Cell curCell, Cell endCell)
+        bool DFS(Cell curCell, Cell endCell)
         {
-            float procTotalCount = structure.Count() * 0.01f;
+            var procTotalCount = structure.Count() * 0.01f;
 
             plottedCells = new HashSet<Cell>();
             plottedCells.Add(curCell);
@@ -42,11 +42,11 @@ namespace Bery0za.Mazerator.Solvers
                 return true;
             }
 
-            IEnumerable<Cell> nextCells = curCell.AdjacentCells.Except(plottedCells);
+            var nextCells = curCell.AdjacentCells.Except(plottedCells);
 
             if (nextCells.Any())
             {
-                foreach (Cell nextCell in nextCells)
+                foreach (var nextCell in nextCells)
                 {
                     if (DFS(nextCell, endCell))
                     {

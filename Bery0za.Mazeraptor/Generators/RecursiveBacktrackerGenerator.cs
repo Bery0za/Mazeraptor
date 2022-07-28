@@ -6,14 +6,14 @@ namespace Bery0za.Mazerator.Generators
 {
     public class RecursiveBacktrackerGenerator : MazeGenerator
     {
-        private readonly CellSelector firstCellSelector;
-        private readonly CellSelector leftCellSelector;
-        private readonly NeighborSelector neighborSelector;
+        readonly CellSelector firstCellSelector;
+        readonly CellSelector leftCellSelector;
+        readonly NeighborSelector neighborSelector;
 
-        private Stack<Cell> carvingCells;
-        private HashSet<Cell> notVisitedCells;
-        private HashSet<Cell> visitedCells;
-        private Cell curCell;
+        Stack<Cell> carvingCells;
+        HashSet<Cell> notVisitedCells;
+        HashSet<Cell> visitedCells;
+        Cell curCell;
 
         public RecursiveBacktrackerGenerator(CellSelector firstCellSelector = null,
                                              CellSelector leftCellSelector = null,
@@ -28,7 +28,7 @@ namespace Bery0za.Mazerator.Generators
 
         protected override bool ProcessGenerating(Random random)
         {
-            float procTotalCount = (float)structure.Count() / 100;
+            var procTotalCount = (float)structure.Count() / 100;
 
             carvingCells = new Stack<Cell>();
             notVisitedCells = new HashSet<Cell>(structure);

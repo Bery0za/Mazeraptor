@@ -28,7 +28,7 @@ namespace Bery0za.Mazerator.Types.Circular
         protected override float DistanceTo(CircularPosition pos)
         {
             // TODO: This is absolutely wrong. Can we just use Euclidean distance?
-            return Math.Abs(pos.ring - this.ring) + Math.Abs(pos.step - this.step);
+            return Math.Abs(pos.ring - ring) + Math.Abs(pos.step - step);
         }
     }
 }
