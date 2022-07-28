@@ -1,128 +1,110 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Bery0za.Mazerator.Types.Circular
 {
-    public class CircularStructure : Structure<CircularParameters, CircularPosition>
-    {
-        private List<HashSet<Cell>> cells;
+	public class CircularStructure : Structure<CircularParameters, CircularPosition>
+	{
+		public override int Count => _cells.Count;
 
-        private HashSet<Cell> this[int ring]
-        {
-            get
-            {
-                return cells.ElementAt(ring);
-            }
-        }
+		List<HashSet<Cell>> _cells;
 
-        private Cell this[int ring, int step]
-        {
-            get
-            {
-                int cellsNumber = CellsNumberInRing(ring);
-                int angle = step % cellsNumber;
+		HashSet<Cell> this[int ring] => _cells.ElementAt(ring);
 
-                while (angle < 0)
-                {
-                    angle += cellsNumber;
-                }
+		Cell this[int ring, int step]
+		{
+			get
+			{
+				var cellsNumber = CellsNumberInRing(ring);
+				var angle = step % cellsNumber;
 
-                while (angle >= CellsNumberInRing(ring))
-                {
-                    angle -= cellsNumber;
-                }
+				while (angle < 0)
+				{
+					angle += cellsNumber;
+				}
 
-                return cells.ElementAt(ring).ElementAt(angle);
-            }
-        }
+				while (angle >= CellsNumberInRing(ring))
+				{
+					angle -= cellsNumber;
+				}
 
-        public CircularStructure(CircularParameters parameters)
-            : base(parameters) { }
+				return _cells.ElementAt(ring).ElementAt(angle);
+			}
+		}
 
-        public override void Init()
-        {
-            cells = new List<HashSet<Cell>>();
-            int prevRingCount = 0;
+		public CircularStructure(CircularParameters parameters)
+			: base(parameters)
+		{
+			
+		}
 
-            for (int i = 0; i <= parameters.rings; i++)
-            {
-                cells.Add(new HashSet<Cell>());
-                int cellsNumber = CircularFunctions.CellsInRing(i, parameters.ratio, prevRingCount);
+		public override void Init()
+		{
+			_cells = new List<HashSet<Cell>>();
+			var prevRingCount = 0;
 
-                for (int j = 0; j < cellsNumber; j++)
-                {
-                    cells.ElementAt(i).Add(CreateCellAtPosition(new CircularPosition(i, j)));
-                }
+			for (var i = 0; i <= parameters.rings; i++)
+			{
+				_cells.Add(new HashSet<Cell>());
+				var cellsNumber = CircularFunctions.CellsInRing(i, parameters.ratio, prevRingCount);
 
-                prevRingCount = cellsNumber;
-            }
+				for (var j = 0; j < cellsNumber; j++)
+				{
+					_cells.ElementAt(i).Add(CreateCellAtPosition(new CircularPosition(i, j)));
+				}
 
-            base.Init();
-        }
+				prevRingCount = cellsNumber;
+			}
 
-        protected override bool ContainsAtPosition(CircularPosition position)
-        {
-            return position.ring <= parameters.rings;
-        }
+			base.Init();
+		}
 
-        protected override Cell CellAtPosition(CircularPosition position)
-        {
-            return this[position.ring, position.step];
-        }
+		protected override bool ContainsAtPosition(CircularPosition position)
+		{
+			return position.ring <= parameters.rings;
+		}
 
-        protected override HashSet<Cell> GetNeighborsAtPosition(CircularPosition position)
-        {
-            int ring = position.ring;
-            int step = position.step;
+		protected override Cell CellAtPosition(CircularPosition position)
+		{
+			return this[position.ring, position.step];
+		}
 
-            HashSet<Cell> neighbors = new HashSet<Cell>();
+		protected override IEnumerable<Cell> GetNeighborsAtPosition(CircularPosition position)
+		{
+			var ring = position.ring;
+			var step = position.step;
 
-            if (ring == 0)
-            {
-                foreach (Cell c in this[1])
-                {
-                    neighbors.Add(c);
-                }
+			if (ring == 0)
+			{
+				foreach (var c in this[1]) yield return c;
 
-                return neighbors;
-            }
+				yield break;
+			}
 
-            neighbors.Add(this[ring, step - 1]);
-            neighbors.Add(this[ring, step + 1]);
+			yield return this[ring, step - 1];
+			yield return this[ring, step + 1];
 
-            if (ring == parameters.rings)
-            {
-                return neighbors;
-            }
+			if (ring == parameters.rings) yield break;
 
-            if (CellsNumberInRing(ring) < CellsNumberInRing(ring + 1))
-            {
-                neighbors.Add(this[ring + 1, step * 2]);
-                neighbors.Add(this[ring + 1, step * 2 + 1]);
-            }
-            else
-            {
-                neighbors.Add(this[ring + 1, step]);
-            }
+			if (CellsNumberInRing(ring) < CellsNumberInRing(ring + 1))
+			{
+				yield return this[ring + 1, step * 2];
+				yield return this[ring + 1, step * 2 + 1];
+			}
+			else
+			{
+				yield return this[ring + 1, step];
+			}
+		}
 
-            return neighbors;
-        }
+		public override IEnumerator<Cell> GetEnumerator()
+		{
+			return _cells.SelectMany(ring => ring).GetEnumerator();
+		}
 
-        public override IEnumerator<Cell> GetEnumerator()
-        {
-            foreach (HashSet<Cell> ring in cells)
-            {
-                foreach (Cell cell in ring)
-                {
-                    yield return cell;
-                }
-            }
-        }
-
-        public int CellsNumberInRing(int ring)
-        {
-            return cells.ElementAt(ring).Count();
-        }
-    }
+		public int CellsNumberInRing(int ring)
+		{
+			return _cells.ElementAt(ring).Count;
+		}
+	}
 }

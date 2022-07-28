@@ -5,76 +5,74 @@ using Bery0za.Methematica.Utils;
 
 namespace Bery0za.Mazerator.Types.Shaped
 {
-    public class ShapedStructure : Structure<ShapedParameters, RectangularPosition>
-    {
-        private Dictionary<ulong, Cell> cells;
+	public class ShapedStructure : Structure<ShapedParameters, RectangularPosition>
+	{
+		public override int Count => _cells.Count;
 
-        public ShapedStructure(ShapedParameters parameters)
-            : base(parameters) { }
+		Dictionary<ulong, Cell> _cells;
 
-        public override void Init()
-        {
-            cells = new Dictionary<ulong, Cell>();
+		public ShapedStructure(ShapedParameters parameters)
+			: base(parameters)
+		{
+			
+		}
 
-            for (int i = 0; i < parameters.shape.Width; i++)
-            {
-                for (int j = 0; j < parameters.shape.Height; j++)
-                {
-                    RectangularPosition pos = new RectangularPosition(i, j);
+		public override void Init()
+		{
+			_cells = new Dictionary<ulong, Cell>();
 
-                    if (parameters.shape.ContainsAtPosition(pos))
-                    {
-                        cells.Add(Cantor.Pairing(i, j), CreateCellAtPosition(pos));
-                    }
-                }
-            }
+			for (var i = 0; i < parameters.shape.Width; i++)
+			{
+				for (var j = 0; j < parameters.shape.Height; j++)
+				{
+					var pos = new RectangularPosition(i, j);
 
-            base.Init();
-        }
+					if (parameters.shape.ContainsAtPosition(pos))
+					{
+						_cells.Add(Cantor.Pairing(i, j), CreateCellAtPosition(pos));
+					}
+				}
+			}
 
-        protected override bool ContainsAtPosition(RectangularPosition position)
-        {
-            if (position.x < 0
-                || position.y < 0
-                || position.x >= parameters.shape.Width
-                || position.y >= parameters.shape.Height) return false;
+			base.Init();
+		}
 
-            return parameters.shape.ContainsAtPosition(position);
-        }
+		protected override bool ContainsAtPosition(RectangularPosition position)
+		{
+			if (position.x < 0
+			    || position.y < 0
+			    || position.x >= parameters.shape.Width
+			    || position.y >= parameters.shape.Height) return false;
 
-        protected override Cell CellAtPosition(RectangularPosition position)
-        {
-            return cells[Cantor.Pairing(position.x, position.y)];
-        }
+			return parameters.shape.ContainsAtPosition(position);
+		}
 
-        private static RectangularPosition[] neighbors = new RectangularPosition[]
-        {
-            new RectangularPosition(1, 0),
-            new RectangularPosition(0, -1),
-            new RectangularPosition(-1, 0),
-            new RectangularPosition(0, 1)
-        };
+		protected override Cell CellAtPosition(RectangularPosition position)
+		{
+			return _cells[Cantor.Pairing(position.x, position.y)];
+		}
 
-        protected override HashSet<Cell> GetNeighborsAtPosition(RectangularPosition position)
-        {
-            HashSet<Cell> neighbors = new HashSet<Cell>();
+		static RectangularPosition[] neighbors = new RectangularPosition[]
+		{
+			new RectangularPosition(1, 0),
+			new RectangularPosition(0, -1),
+			new RectangularPosition(-1, 0),
+			new RectangularPosition(0, 1)
+		};
 
-            foreach (var neighbour in ShapedStructure.neighbors)
-            {
-                RectangularPosition nPos = position + neighbour;
+		protected override IEnumerable<Cell> GetNeighborsAtPosition(RectangularPosition position)
+		{
+			foreach (var neighbour in neighbors)
+			{
+				var nPos = position + neighbour;
 
-                if (ContainsAtPosition(nPos))
-                {
-                    neighbors.Add(CellAtPosition(nPos));
-                }
-            }
+				if (ContainsAtPosition(nPos)) yield return CellAtPosition(nPos);
+			}
+		}
 
-            return neighbors;
-        }
-
-        public override IEnumerator<Cell> GetEnumerator()
-        {
-            return cells.Values.GetEnumerator();
-        }
-    }
+		public override IEnumerator<Cell> GetEnumerator()
+		{
+			return _cells.Values.GetEnumerator();
+		}
+	}
 }

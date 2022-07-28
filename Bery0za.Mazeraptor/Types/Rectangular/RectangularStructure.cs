@@ -2,75 +2,73 @@
 
 namespace Bery0za.Mazerator.Types.Rectangular
 {
-    public class RectangularStructure : Structure<RectangularParameters, RectangularPosition>
-    {
-        private Cell[,] cells;
+	public class RectangularStructure : Structure<RectangularParameters, RectangularPosition>
+	{
+		public override int Count => _cells.Length;
 
-        public RectangularStructure(RectangularParameters parameters)
-            : base(parameters) { }
+		Cell[,] _cells;
 
-        public override void Init()
-        {
-            cells = new Cell[parameters.width, parameters.height];
+		public RectangularStructure(RectangularParameters parameters)
+			: base(parameters)
+		{
+			
+		}
 
-            for (int i = 0; i < parameters.width; i++)
-            {
-                for (int j = 0; j < parameters.height; j++)
-                {
-                    cells[i, j] = CreateCellAtPosition(new RectangularPosition(i, j));
-                }
-            }
+		public override void Init()
+		{
+			_cells = new Cell[parameters.width, parameters.height];
 
-            base.Init();
-        }
+			for (var i = 0; i < parameters.width; i++)
+			{
+				for (var j = 0; j < parameters.height; j++)
+				{
+					_cells[i, j] = CreateCellAtPosition(new RectangularPosition(i, j));
+				}
+			}
 
-        protected override bool ContainsAtPosition(RectangularPosition position)
-        {
-            return position.x > -1
-                   && position.x < parameters.width
-                   && position.y > -1
-                   && position.y < parameters.height;
-        }
+			base.Init();
+		}
 
-        protected override Cell CellAtPosition(RectangularPosition position)
-        {
-            return cells[position.x, position.y];
-        }
+		protected override bool ContainsAtPosition(RectangularPosition position)
+		{
+			return position.x > -1
+			       && position.x < parameters.width
+			       && position.y > -1
+			       && position.y < parameters.height;
+		}
 
-        private static RectangularPosition[] neighbors = new RectangularPosition[]
-        {
-            new RectangularPosition(1, 0),
-            new RectangularPosition(0, -1),
-            new RectangularPosition(-1, 0),
-            new RectangularPosition(0, 1)
-        };
+		protected override Cell CellAtPosition(RectangularPosition position)
+		{
+			return _cells[position.x, position.y];
+		}
 
-        protected override HashSet<Cell> GetNeighborsAtPosition(RectangularPosition position)
-        {
-            HashSet<Cell> neighbors = new HashSet<Cell>();
+		static RectangularPosition[] neighbors = new RectangularPosition[]
+		{
+			new RectangularPosition(1, 0),
+			new RectangularPosition(0, -1),
+			new RectangularPosition(-1, 0),
+			new RectangularPosition(0, 1)
+		};
 
-            foreach (var neighbour in RectangularStructure.neighbors)
-            {
-                RectangularPosition nPos = position + neighbour;
+		protected override IEnumerable<Cell> GetNeighborsAtPosition(RectangularPosition position)
+		{
+			foreach (var neighbour in neighbors)
+			{
+				var nPos = position + neighbour;
 
-                if (ContainsAtPosition(nPos))
-                {
-                    neighbors.Add(CellAtPosition(nPos));
-                }
-            }
+				if (ContainsAtPosition(nPos)) yield return CellAtPosition(nPos);
+			}
+		}
 
-            return neighbors;
-        }
-
-        public override IEnumerator<Cell> GetEnumerator()
-        {
-            for (int i = 0; i < parameters.width; i++)
-            {
-                for (int j = 0; j < parameters.height; j++)
-                {
-                    yield return cells[i, j];
-                }
-            }
-        }
-    }
+		public override IEnumerator<Cell> GetEnumerator()
+		{
+			for (var i = 0; i < parameters.width; i++)
+			{
+				for (var j = 0; j < parameters.height; j++)
+				{
+					yield return _cells[i, j];
+				}
+			}
+		}
+	}
 }

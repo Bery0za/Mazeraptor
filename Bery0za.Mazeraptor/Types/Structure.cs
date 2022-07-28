@@ -4,140 +4,142 @@ using System.Linq;
 
 namespace Bery0za.Mazerator.Types
 {
-    public abstract class Structure<TParameters, TPosition> : IStructure
-        where TParameters : Parameters
-        where TPosition : IPosition
-    {
-        public Parameters Parameters => parameters;
+	public abstract class Structure<TParameters, TPosition> : IStructure
+		where TParameters : Parameters
+		where TPosition : IPosition
+	{
+		public Parameters Parameters => parameters;
 
-        public readonly TParameters parameters;
+		public abstract int Count { get; }
 
-        protected Structure(TParameters parameters)
-        {
-            this.parameters = parameters;
-        }
+		public readonly TParameters parameters;
 
-        private void AddNeighborsForCells()
-        {
-            foreach (Cell cell in this)
-            {
-                SetNeighbour(cell, CalcNeighborsForCell(cell));
-            }
-        }
+		protected Structure(TParameters parameters)
+		{
+			this.parameters = parameters;
+		}
 
-        public Type PositionType()
-        {
-            return typeof(TPosition);
-        }
+		void AddNeighborsForCells()
+		{
+			foreach (var cell in this)
+			{
+				SetNeighbour(cell, CalcNeighborsForCell(cell));
+			}
+		}
 
-        public bool ContainsCellAtPosition(IPosition position)
-        {
-            if (position is TPosition typedPosition)
-            {
-                return ContainsAtPosition(typedPosition);
-            }
+		public Type PositionType()
+		{
+			return typeof(TPosition);
+		}
 
-            throw new InvalidCastException("This structure uses another type of positioning");
-        }
+		public bool ContainsCellAtPosition(IPosition position)
+		{
+			if (position is TPosition typedPosition)
+			{
+				return ContainsAtPosition(typedPosition);
+			}
 
-        public Cell GetCellAtPosition(IPosition position)
-        {
-            if (position is TPosition typedPosition)
-            {
-                return GetCellAtPosition(typedPosition);
-            }
+			throw new InvalidCastException("This structure uses another type of positioning");
+		}
 
-            throw new InvalidCastException("This structure uses another type of positioning");
-        }
+		public Cell GetCellAtPosition(IPosition position)
+		{
+			if (position is TPosition typedPosition)
+			{
+				return GetCellAtPosition(typedPosition);
+			}
 
-        protected Cell GetCellAtPosition(TPosition position)
-        {
-            if (ContainsAtPosition(position))
-            {
-                return CellAtPosition(position);
-            }
+			throw new InvalidCastException("This structure uses another type of positioning");
+		}
 
-            throw new ArgumentOutOfRangeException("Doesn't contain position " + position);
-        }
+		protected Cell GetCellAtPosition(TPosition position)
+		{
+			if (ContainsAtPosition(position))
+			{
+				return CellAtPosition(position);
+			}
 
-        public virtual void Init()
-        {
-            AddNeighborsForCells();
-        }
+			throw new ArgumentOutOfRangeException("Doesn't contain position " + position);
+		}
 
-        public HashSet<Cell> CalcNeighborsForCell(Cell cell)
-        {
-            if (this.Contains(cell))
-            {
-                return GetNeighborsAtPosition((TPosition)cell.Position);
-            }
+		public virtual void Init()
+		{
+			AddNeighborsForCells();
+		}
 
-            throw new ArgumentOutOfRangeException("Doesn't contain cell " + cell);
-        }
+		public IEnumerable<Cell> CalcNeighborsForCell(Cell cell)
+		{
+			if (this.Contains(cell))
+			{
+				return GetNeighborsAtPosition((TPosition)cell.Position);
+			}
 
-        protected abstract HashSet<Cell> GetNeighborsAtPosition(TPosition position);
+			throw new ArgumentOutOfRangeException("Doesn't contain cell " + cell);
+		}
 
-        protected Cell CreateCellAtPosition(TPosition position)
-        {
-            return new Cell(position);
-        }
+		protected abstract IEnumerable<Cell> GetNeighborsAtPosition(TPosition position);
 
-        public bool ContainsCells(params Cell[] cells)
-        {
-            return cells.All(this.Contains);
-        }
+		protected Cell CreateCellAtPosition(TPosition position)
+		{
+			return new Cell(position);
+		}
 
-        protected abstract Cell CellAtPosition(TPosition position);
+		public bool ContainsCells(params Cell[] cells)
+		{
+			return cells.All(this.Contains);
+		}
 
-        protected abstract bool ContainsAtPosition(TPosition position);
+		protected abstract Cell CellAtPosition(TPosition position);
 
-        public bool IsNeighbour(Cell cellA, Cell cellB)
-        {
-            return cellA.NeighbourCells.Contains(cellB);
-        }
+		protected abstract bool ContainsAtPosition(TPosition position);
 
-        public bool IsAdjacent(Cell cellA, Cell cellB)
-        {
-            return cellA.AdjacentCells.Contains(cellB);
-        }
+		public bool IsNeighbour(Cell cellA, Cell cellB)
+		{
+			return cellA.NeighbourCells.Contains(cellB);
+		}
 
-        public void SetNeighbour(Cell cellA, Cell cellB)
-        {
-            cellA.NeighbourCells.Add(cellB);
-            cellB.NeighbourCells.Add(cellA);
-        }
+		public bool IsAdjacent(Cell cellA, Cell cellB)
+		{
+			return cellA.AdjacentCells.Contains(cellB);
+		}
 
-        public void SetNeighbour(Cell cell, HashSet<Cell> neighbors)
-        {
-            cell.NeighbourCells.UnionWith(neighbors);
+		public void SetNeighbour(Cell cellA, Cell cellB)
+		{
+			cellA.NeighbourCells.Add(cellB);
+			cellB.NeighbourCells.Add(cellA);
+		}
 
-            foreach (Cell neighbour in neighbors)
-            {
-                neighbour.NeighbourCells.Add(cell);
-            }
-        }
+		public void SetNeighbour(Cell cell, IEnumerable<Cell> neighbors)
+		{
+			cell.NeighbourCells.UnionWith(neighbors);
 
-        public void SetAdjacent(Cell cellA, Cell cellB)
-        {
-            cellA.AdjacentCells.Add(cellB);
-            cellB.AdjacentCells.Add(cellA);
-        }
+			foreach (var neighbour in neighbors)
+			{
+				neighbour.NeighbourCells.Add(cell);
+			}
+		}
 
-        public void SetAdjacent(Cell cell, HashSet<Cell> adjacents)
-        {
-            cell.AdjacentCells.UnionWith(adjacents);
+		public void SetAdjacent(Cell cellA, Cell cellB)
+		{
+			cellA.AdjacentCells.Add(cellB);
+			cellB.AdjacentCells.Add(cellA);
+		}
 
-            foreach (Cell adjacent in adjacents)
-            {
-                adjacent.AdjacentCells.Add(cell);
-            }
-        }
+		public void SetAdjacent(Cell cell, IEnumerable<Cell> adjacent1)
+		{
+			cell.AdjacentCells.UnionWith(adjacent1);
 
-        public abstract IEnumerator<Cell> GetEnumerator();
+			foreach (var adjacent in adjacent1)
+			{
+				adjacent.AdjacentCells.Add(cell);
+			}
+		}
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-    }
+		public abstract IEnumerator<Cell> GetEnumerator();
+
+		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
+		}
+	}
 }

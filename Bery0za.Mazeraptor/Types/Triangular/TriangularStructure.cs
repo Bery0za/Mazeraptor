@@ -1,81 +1,77 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 using Bery0za.Methematica.Utils;
 
 namespace Bery0za.Mazerator.Types.Triangular
 {
-    public class TriangularStructure : Structure<TriangularParameters, TriangularPosition>
-    {
-        private Dictionary<ulong, Cell> cells;
+	public class TriangularStructure : Structure<TriangularParameters, TriangularPosition>
+	{
+		public override int Count => _cells.Count;
 
-        public TriangularStructure(TriangularParameters parameters)
-            : base(parameters) { }
+		Dictionary<ulong, Cell> _cells;
 
-        public override void Init()
-        {
-            cells = new Dictionary<ulong, Cell>();
-            int side = (int)parameters.side;
+		public TriangularStructure(TriangularParameters parameters)
+			: base(parameters)
+		{
+			
+		}
 
-            for (int q = 0; q < side; q++)
-            {
-                int r2 = side - q;
+		public override void Init()
+		{
+			_cells = new Dictionary<ulong, Cell>();
+			var side = (int)parameters.side;
 
-                for (int r = 0; r < r2; r++)
-                {
-                    int s1 = -q - r;
-                    cells.Add(Cantor.Tuple(q, r, s1), CreateCellAtPosition(new TriangularPosition(q, r, s1)));
+			for (var q = 0; q < side; q++)
+			{
+				var r2 = side - q;
 
-                    if ((q + r) < side - 1)
-                    {
-                        int s2 = s1 - 1;
-                        cells.Add(Cantor.Tuple(q, r, s2), CreateCellAtPosition(new TriangularPosition(q, r, s2)));
-                    }
-                }
-            }
+				for (var r = 0; r < r2; r++)
+				{
+					var s1 = -q - r;
+					_cells.Add(Cantor.Tuple(q, r, s1), CreateCellAtPosition(new TriangularPosition(q, r, s1)));
 
-            base.Init();
-        }
+					if ((q + r) < side - 1)
+					{
+						var s2 = s1 - 1;
+						_cells.Add(Cantor.Tuple(q, r, s2), CreateCellAtPosition(new TriangularPosition(q, r, s2)));
+					}
+				}
+			}
 
-        protected override bool ContainsAtPosition(TriangularPosition position)
-        {
-            return cells.ContainsKey(Cantor.Tuple(position.q, position.r, position.s));
-        }
+			base.Init();
+		}
 
-        protected override Cell CellAtPosition(TriangularPosition position)
-        {
-            return cells[Cantor.Tuple(position.q, position.r, position.s)];
-        }
+		protected override bool ContainsAtPosition(TriangularPosition position)
+		{
+			return _cells.ContainsKey(Cantor.Tuple(position.q, position.r, position.s));
+		}
 
-        private static TriangularPosition[] neighbors = new TriangularPosition[]
-        {
-            new TriangularPosition(1, 0, 0),
-            new TriangularPosition(0, 1, 0),
-            new TriangularPosition(0, 0, 1),
-        };
+		protected override Cell CellAtPosition(TriangularPosition position)
+		{
+			return _cells[Cantor.Tuple(position.q, position.r, position.s)];
+		}
 
-        protected override HashSet<Cell> GetNeighborsAtPosition(TriangularPosition position)
-        {
-            HashSet<Cell> neighbors = new HashSet<Cell>();
+		static TriangularPosition[] neighbors = new TriangularPosition[]
+		{
+			new TriangularPosition(1, 0, 0),
+			new TriangularPosition(0, 1, 0),
+			new TriangularPosition(0, 0, 1),
+		};
 
-            foreach (TriangularPosition neighbour in TriangularStructure.neighbors)
-            {
-                TriangularPosition nPos = position.Pointed() ? position - neighbour : position + neighbour;
+		protected override IEnumerable<Cell> GetNeighborsAtPosition(TriangularPosition position)
+		{
+			foreach (var neighbour in neighbors)
+			{
+				var nPos = position.Pointed() ? position - neighbour : position + neighbour;
 
-                if (ContainsAtPosition(nPos))
-                {
-                    neighbors.Add(CellAtPosition(nPos));
-                }
-            }
+				if (ContainsAtPosition(nPos)) yield return CellAtPosition(nPos);
+			}
+		}
 
-            return neighbors;
-        }
-
-        public override IEnumerator<Cell> GetEnumerator()
-        {
-            foreach (var pair in cells)
-            {
-                yield return pair.Value;
-            }
-        }
-    }
+		public override IEnumerator<Cell> GetEnumerator()
+		{
+			return _cells.Select(pair => pair.Value).GetEnumerator();
+		}
+	}
 }

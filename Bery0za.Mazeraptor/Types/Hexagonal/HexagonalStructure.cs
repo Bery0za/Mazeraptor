@@ -1,79 +1,75 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Bery0za.Methematica.Utils;
 
 namespace Bery0za.Mazerator.Types.Hexagonal
 {
-    public class HexagonalStructure : Structure<HexagonalParameters, HexagonalPosition>
-    {
-        private Dictionary<ulong, Cell> cells;
+	public class HexagonalStructure : Structure<HexagonalParameters, HexagonalPosition>
+	{
+		public override int Count => _cells.Count;
 
-        public HexagonalStructure(HexagonalParameters parameters)
-            : base(parameters) { }
+		Dictionary<ulong, Cell> _cells;
 
-        public override void Init()
-        {
-            cells = new Dictionary<ulong, Cell>();
-            uint rings = parameters.rings;
+		public HexagonalStructure(HexagonalParameters parameters)
+			: base(parameters)
+		{
+			
+		}
 
-            for (int q = (int)(-rings); q <= rings; q++)
-            {
-                int r1 = (int)Math.Max(-rings, -q - rings);
-                int r2 = (int)Math.Min(rings, -q + rings);
+		public override void Init()
+		{
+			_cells = new Dictionary<ulong, Cell>();
+			var rings = parameters.rings;
 
-                for (int r = r1; r <= r2; r++)
-                {
-                    cells.Add(Cantor.Pairing(q, r), CreateCellAtPosition(new HexagonalPosition(q, r)));
-                }
-            }
+			for (var q = (int)(-rings); q <= rings; q++)
+			{
+				var r1 = (int)Math.Max(-rings, -q - rings);
+				var r2 = (int)Math.Min(rings, -q + rings);
 
-            base.Init();
-        }
+				for (var r = r1; r <= r2; r++)
+				{
+					_cells.Add(Cantor.Pairing(q, r), CreateCellAtPosition(new HexagonalPosition(q, r)));
+				}
+			}
 
-        protected override bool ContainsAtPosition(HexagonalPosition position)
-        {
-            return cells.ContainsKey(Cantor.Pairing(position.q, position.r));
-        }
+			base.Init();
+		}
 
-        protected override Cell CellAtPosition(HexagonalPosition position)
-        {
-            return cells[Cantor.Pairing(position.q, position.r)];
-        }
+		protected override bool ContainsAtPosition(HexagonalPosition position)
+		{
+			return _cells.ContainsKey(Cantor.Pairing(position.q, position.r));
+		}
 
-        private static HexagonalPosition[] neighbors = new HexagonalPosition[]
-        {
-            new HexagonalPosition(1, -1),
-            new HexagonalPosition(1, 0),
-            new HexagonalPosition(0, 1),
-            new HexagonalPosition(-1, 1),
-            new HexagonalPosition(-1, 0),
-            new HexagonalPosition(0, -1)
-        };
+		protected override Cell CellAtPosition(HexagonalPosition position)
+		{
+			return _cells[Cantor.Pairing(position.q, position.r)];
+		}
 
-        protected override HashSet<Cell> GetNeighborsAtPosition(HexagonalPosition position)
-        {
-            HashSet<Cell> neighbors = new HashSet<Cell>();
+		static HexagonalPosition[] neighbors = new HexagonalPosition[]
+		{
+			new HexagonalPosition(1, -1),
+			new HexagonalPosition(1, 0),
+			new HexagonalPosition(0, 1),
+			new HexagonalPosition(-1, 1),
+			new HexagonalPosition(-1, 0),
+			new HexagonalPosition(0, -1)
+		};
 
-            foreach (HexagonalPosition neighbour in HexagonalStructure.neighbors)
-            {
-                HexagonalPosition nPos = neighbour + position;
+		protected override IEnumerable<Cell> GetNeighborsAtPosition(HexagonalPosition position)
+		{
+			foreach (var neighbour in neighbors)
+			{
+				var nPos = neighbour + position;
 
-                if (ContainsAtPosition(nPos))
-                {
-                    neighbors.Add(CellAtPosition(nPos));
-                }
-            }
+				if (ContainsAtPosition(nPos)) yield return CellAtPosition(nPos);
+			}
+		}
 
-            return neighbors;
-        }
-
-        public override IEnumerator<Cell> GetEnumerator()
-        {
-            foreach (var pair in cells)
-            {
-                yield return pair.Value;
-            }
-        }
-    }
+		public override IEnumerator<Cell> GetEnumerator()
+		{
+			return _cells.Select(pair => pair.Value).GetEnumerator();
+		}
+	}
 }
